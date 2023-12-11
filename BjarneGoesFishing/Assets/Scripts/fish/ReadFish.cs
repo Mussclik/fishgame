@@ -23,13 +23,9 @@ public class ReadFish : MonoBehaviour
 
     string readType;
 
-    [SerializeField] TextAsset fishList; /* itemCardList, mutationCardList;
-        [SerializeField] CreatureCard[] creatureCard;
-        [SerializeField] ItemCard[] itemCard;
-        [SerializeField] MutationCard[] mutationCard;
-                                                     */
-    [SerializeField]
+    [SerializeField] TextAsset fishList;
     public List<FishInfo> fishies;
+    public List<Sprite> fishSprites;
 
 
     private void OnValidate() //this be stoled

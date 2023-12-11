@@ -1,16 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Fish : MonoBehaviour
 {
     [SerializeField] private bool debug;
-    public ReadFish.FishInfo fishinfo;
-    public Sprite image;
+    public int id;
+    public ReadFish.FishInfo fishinfo; //dont look at this, i cry everytime
+    public SpriteRenderer spriteRenderer;
+    public Sprite sprite;
 
-    void GetStats(int id)
+    private void Start()
     {
-        ReadFish database = GeneralManager.generalmanager.gameObject.GetComponent<ReadFish>();
-        //database.fishies[id];
+        
     }
+
+    private void Update()
+    {
+        if (debug)
+        {
+            debug = false;
+            GetInfo(id);
+            UpdateInfo();
+
+        }
+    }
+
+    public void GetInfo(int id)
+    {
+        fishinfo = GeneralManager.readfish.fishies[id];
+        sprite = GeneralManager.readfish.fishSprites[id];
+    }
+    public void UpdateInfo()
+    {
+        spriteRenderer.sprite = sprite;
+    }
+    
+    public void Movement()
+    {
+
+    }
+
 }

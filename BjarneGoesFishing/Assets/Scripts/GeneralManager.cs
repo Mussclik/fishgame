@@ -6,12 +6,14 @@ using UnityEngine;
 public class GeneralManager : MonoBehaviour
 {
     public static GeneralManager generalmanager;
+    public static ReadFish readfish;
     internal GeneralManager()
     {
-        GeneralManager.generalmanager = this;
+
     }
     private void Start()
     {
-        
+        generalmanager = this;
+        readfish = gameObject.GetComponent<ReadFish>();
     }
 }
