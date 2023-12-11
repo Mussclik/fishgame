@@ -1,0 +1,2 @@
+ign, Template [f, name, description (new line "¤"), (int)points, (int)tier, (int)minDepth, (int)maxDepth]
+f, koifish, koishi koishi, 5, 999, 25, 50
