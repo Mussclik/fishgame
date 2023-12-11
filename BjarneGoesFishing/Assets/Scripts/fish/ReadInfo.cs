@@ -7,19 +7,32 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using Unity.VisualScripting;
 
-public class ReadFish : MonoBehaviour
+public class ReadInfo : MonoBehaviour
 {
     [Serializable]
-    public class FishInfo
+    public class Info
     {
-        public string fishname, description;
+        public string name, description;
+    }
+
+    public class FishInfo : Info
+    {
+        
         public int points, tier;
         public int minDepth, maxDepth;
+    }
+    public class ItemInfo : Info
+    {
 
+    }
+    public class RodInfo : ItemInfo
+    {
 
     }
 
     [SerializeField] string[] lines;
+
+
 
     string readType;
 
@@ -97,7 +110,7 @@ public class ReadFish : MonoBehaviour
         string[] parts = line.Split(", "); // turns a string into array depending on the Split() parameters
 
         FishInfo fishinfo = new FishInfo();
-        fishinfo.fishname = parts[1]; //uuuuhhhh, i think so int.tryparse(string, output int) ?(if)  truevalue : falsevalue     so if tryparse returns true, the line will give whats left of the :, but if false then it returns what is to the right.
+        fishinfo.name = parts[1]; //uuuuhhhh, i think so int.tryparse(string, output int) ?(if)  truevalue : falsevalue     so if tryparse returns true, the line will give whats left of the :, but if false then it returns what is to the right.
         fishinfo.description = AddNewLines(parts[2], "¤"); //because of some fucky wuckys, the notes are out of order
         fishinfo.points = int.TryParse(parts[3], out int output) ? output : 0; // int.TryParse(parts[4]) returns a true/false if it can convert it or not, you can give it an out variable to put the result into
         fishinfo.tier = int.TryParse(parts[4], out output) ? output : 0; //baseattack = AttemptConvertToInt, if true, return output, if false return 0;     ? output = if true return output,   : 0 = if false return 0

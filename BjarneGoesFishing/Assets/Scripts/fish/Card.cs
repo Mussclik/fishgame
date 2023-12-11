@@ -7,7 +7,7 @@ public class Card : MonoBehaviour
 {
     [SerializeField] private bool debug;
     public int id;
-    public ReadFish.FishInfo fishinfo; //dont look at this, i cry everytime
+    public ReadInfo.FishInfo fishinfo; //dont look at this, i cry everytime
     public SpriteRenderer spriteRenderer;
     public TextMeshPro namerenderer;
     public TextMeshPro descriptionRenderer;

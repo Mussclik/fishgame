@@ -6,7 +6,7 @@ using UnityEngine;
 public class GeneralManager : MonoBehaviour
 {
     public static GeneralManager generalmanager;
-    public static ReadFish readfish;
+    public static ReadInfo readfish;
     internal GeneralManager()
     {
 
@@ -14,6 +14,6 @@ public class GeneralManager : MonoBehaviour
     private void Start()
     {
         generalmanager = this;
-        readfish = gameObject.GetComponent<ReadFish>();
+        readfish = gameObject.GetComponent<ReadInfo>();
     }
 }
