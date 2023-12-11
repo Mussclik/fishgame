@@ -9,7 +9,6 @@ public class Fish : MonoBehaviour
     public int id;
     public FishInfo fishinfo; //dont look at this, i cry everytime
     public SpriteRenderer spriteRenderer;
-    public Sprite sprite;
 
     private void Start()
     {
@@ -22,7 +21,6 @@ public class Fish : MonoBehaviour
         {
             debug = false;
             GetInfo(id);
-            UpdateInfo();
 
         }
     }
@@ -30,11 +28,7 @@ public class Fish : MonoBehaviour
     public void GetInfo(int id)
     {
         fishinfo = GeneralManager.readfish.fishList[id];
-        sprite = GeneralManager.readfish.fishSprites[id];
-    }
-    public void UpdateInfo()
-    {
-        spriteRenderer.sprite = sprite;
+        spriteRenderer.sprite = GeneralManager.readfish.fishSprites[id];
     }
     
     public void Movement()
