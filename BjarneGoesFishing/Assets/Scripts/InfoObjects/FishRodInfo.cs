@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class FishRodInfo : ItemInfo
 {
+    int tier;
+    float maxDepth;
+    float maxRange;
     internal FishRodInfo()
     {
         consumable = false;

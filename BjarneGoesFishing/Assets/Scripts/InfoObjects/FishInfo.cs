@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FishInfo : Info
 {
-    public int points, tier;
-    public int minDepth, maxDepth;
+    public int value;
+    public int tier;
+    public int minDepth; 
+    public int maxDepth;
 }

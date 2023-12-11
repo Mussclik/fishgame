@@ -1,12 +1,18 @@
 ign, Fish [f, name, description (new line "¤"), (int)points, (int)tier, (int)minDepth, (int)maxDepth]
-ign, FishingRod [rod, name, description,]
+ign, FishingRod [rod, name, description, (int)tier, (int)price, (float)maxRange, (float)maxDepth]
+
 
 ign, in descriptions you can add a "¤" to create a new line
 
 
 
 ign, f = fish, rod = fishing rod, item = item(duh), 
+
+ign, fishes
 f, koifish, koishi koishi, 5, 999, 25, 50
 f, missfish, its seems to have failed rendering properly, 0, 0, 0, 0
-rod, bamboo rod, it made of bamboo,
+
+
+ign, fishing rods
+rod, Cheat Rod, A completely legit way to play, 99999, 99999, 99999, 99999
 
