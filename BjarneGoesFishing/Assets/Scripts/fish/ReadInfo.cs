@@ -15,29 +15,14 @@ public class ReadInfo : MonoBehaviour
         public string name, description;
     }
 
-    public class FishInfo : Info
-    {
-        
-        public int points, tier;
-        public int minDepth, maxDepth;
-    }
-    public class ItemInfo : Info
-    {
-
-    }
-    public class RodInfo : ItemInfo
-    {
-
-    }
-
     [SerializeField] string[] lines;
 
 
 
     string readType;
 
-    [SerializeField] TextAsset fishList;
-    public List<FishInfo> fishies;
+    [SerializeField] TextAsset List;
+    public List<FishInfo> fishList = new List<FishInfo>();
     public List<Sprite> fishSprites;
 
 
@@ -45,12 +30,12 @@ public class ReadInfo : MonoBehaviour
     {
 
         // the ? is a short way of asking if it does not equal null then continue, if it does equal null then return lines = nulll
-        lines = fishList ? fishList.text.Split(new[]
+        lines = List ? List.text.Split(new[]
         {
                 Environment.NewLine
             }, StringSplitOptions.RemoveEmptyEntries) : null; // if creaturecardlist equals true then it makes a new split every new line, also remove empty lines as an addon(?) and if it equals false return null
 
-        fishies.Clear();
+        fishList.Clear();
 
         if (lines != null)
         {
@@ -61,13 +46,11 @@ public class ReadInfo : MonoBehaviour
                 switch (readType)
                 {
                     case "f": //creature card
-                        fishies.Add(ConvertToFish(lines[i]));
-                        Debug.Log("fish");
+                        fishList.Add(ConvertToFish(lines[i]));
                         break;
 
                     case "ignore":
                     case "ign":
-                        Debug.Log("notfish");
                         break;
 
                     default:
@@ -110,15 +93,16 @@ public class ReadInfo : MonoBehaviour
         string[] parts = line.Split(", "); // turns a string into array depending on the Split() parameters
 
         FishInfo fishinfo = new FishInfo();
-        fishinfo.name = parts[1]; //uuuuhhhh, i think so int.tryparse(string, output int) ?(if)  truevalue : falsevalue     so if tryparse returns true, the line will give whats left of the :, but if false then it returns what is to the right.
-        fishinfo.description = AddNewLines(parts[2], "¤"); //because of some fucky wuckys, the notes are out of order
-        fishinfo.points = int.TryParse(parts[3], out int output) ? output : 0; // int.TryParse(parts[4]) returns a true/false if it can convert it or not, you can give it an out variable to put the result into
-        fishinfo.tier = int.TryParse(parts[4], out output) ? output : 0; //baseattack = AttemptConvertToInt, if true, return output, if false return 0;     ? output = if true return output,   : 0 = if false return 0
-        fishinfo.minDepth = int.TryParse(parts[5], out output) ? output : 0;
-        fishinfo.maxDepth = int.TryParse(parts[6], out output) ? output : 0; //buh buh
-        return fishinfo;
-
-
+        return new FishInfo()
+        {
+            name = parts[1], //uuuuhhhh, i think so int.tryparse(string, output int) ?(if)  truevalue : falsevalue     so if tryparse returns true, the line will give whats left of the :, but if false then it returns what is to the right.
+            description = AddNewLines(parts[2], "¤"), //because of some fucky wuckys, the notes are out of order
+            points = int.TryParse(parts[3], out int output) ? output : 0, // int.TryParse(parts[4]) returns a true/false if it can convert it or not, you can give it an out variable to put the result into
+            tier = int.TryParse(parts[4], out output) ? output : 0, //baseattack = AttemptConvertToInt, if true, return output, if false return 0;     ? output = if true return output,   : 0 = if false return 0
+            minDepth = int.TryParse(parts[5], out output) ? output : 0,
+            maxDepth = int.TryParse(parts[6], out output) ? output : 0, //buh buh
+        };
+    }
         //return new FishInfo()
         //{
         //    name = parts[1], //uuuuhhhh, i think so int.tryparse(string, output int) ?(if)  truevalue : falsevalue     so if tryparse returns true, the line will give whats left of the :, but if false then it returns what is to the right.
@@ -128,6 +112,5 @@ public class ReadInfo : MonoBehaviour
         //    minDepth = int.TryParse(parts[5], out output) ? output : 0,
         //    maxDepth = int.TryParse(parts[6], out output) ? output : 0, //buh buh
         //};
-    }
 }
 

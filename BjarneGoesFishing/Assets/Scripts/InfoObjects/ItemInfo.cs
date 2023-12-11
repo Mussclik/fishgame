@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class ItemInfo : Info
 {
-    int price;
+    public bool consumable;
+    public int price;
 }

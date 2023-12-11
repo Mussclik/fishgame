@@ -1,3 +1,12 @@
-ign, Template [f, name, description (new line "¤"), (int)points, (int)tier, (int)minDepth, (int)maxDepth]
+ign, Fish [f, name, description (new line "¤"), (int)points, (int)tier, (int)minDepth, (int)maxDepth]
+ign, FishingRod [rod, name, description,]
+
+ign, in descriptions you can add a "¤" to create a new line
+
+
+
+ign, f = fish, rod = fishing rod, item = item(duh), 
 f, koifish, koishi koishi, 5, 999, 25, 50
 f, missfish, its seems to have failed rendering properly, 0, 0, 0, 0
+rod, bamboo rod, it made of bamboo,
+

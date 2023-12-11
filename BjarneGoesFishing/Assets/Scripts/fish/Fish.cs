@@ -7,7 +7,7 @@ public class Fish : MonoBehaviour
 {
     [SerializeField] private bool debug;
     public int id;
-    public ReadInfo.FishInfo fishinfo; //dont look at this, i cry everytime
+    public FishInfo fishinfo; //dont look at this, i cry everytime
     public SpriteRenderer spriteRenderer;
     public Sprite sprite;
 
@@ -29,7 +29,7 @@ public class Fish : MonoBehaviour
 
     public void GetInfo(int id)
     {
-        fishinfo = GeneralManager.readfish.fishies[id];
+        fishinfo = GeneralManager.readfish.fishList[id];
         sprite = GeneralManager.readfish.fishSprites[id];
     }
     public void UpdateInfo()

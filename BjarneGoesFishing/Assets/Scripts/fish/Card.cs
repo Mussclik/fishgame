@@ -7,7 +7,7 @@ public class Card : MonoBehaviour
 {
     [SerializeField] private bool debug;
     public int id;
-    public ReadInfo.FishInfo fishinfo; //dont look at this, i cry everytime
+    public FishInfo fishinfo; //dont look at this, i cry everytime
     public SpriteRenderer spriteRenderer;
     public TextMeshPro namerenderer;
     public TextMeshPro descriptionRenderer;
@@ -29,8 +29,8 @@ public class Card : MonoBehaviour
 
     void UpdateInfo(int id)
     {
-        fishinfo = GeneralManager.readfish.fishies[id];
-        namerenderer.text = fishinfo.fishname;
+        fishinfo = GeneralManager.readfish.fishList[id];
+        namerenderer.text = fishinfo.name;
         descriptionRenderer.text = fishinfo.description;
         spriteRenderer.sprite = GeneralManager.readfish.fishSprites[id];
     }
