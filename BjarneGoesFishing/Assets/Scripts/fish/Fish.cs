@@ -12,6 +12,9 @@ public class Fish : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     [SerializeField] private bool debug;
     [SerializeField] LerpScript lerpScript;
+    [SerializeField] internal bool caught = false;
+    [SerializeField] Transform hook;
+    [SerializeField] private Transform mouth;
 
     #region FugoidMethodVars
     [SerializeField] private bool Increasing;
@@ -31,19 +34,27 @@ public class Fish : MonoBehaviour
 
     void Update()
     {
-        lerpScript.UpdateRotation();
-        Fugoid();
-
+        if (!caught)
+        {
+            lerpScript.UpdateRotation();
+            Fugoid();
+            
+        }
+        else
+        { 
+            
+        }
+        Movement();
         if (debug)
         {
             debug = false;
-            GetInfo(id);
+            UpdateInfo(id);
         }
-        Movement();
-
+    }
+    public void Release()
+    {
 
     }
-
     private void Fugoid()
     {
         fugoidTimer += Time.deltaTime;
@@ -156,17 +167,28 @@ public class Fish : MonoBehaviour
         return value;
     }
 
-    public void GetInfo(int id)
+    public void UpdateInfo(int id)
     {
         fishinfo = GeneralManager.readfish.fishList[id];
         spriteRenderer.sprite = GeneralManager.readfish.fishSprites[id];
         newgameobject.transform.localPosition = new Vector3(fishinfo.speed, fishinfo.speed, 0);
     }
+    public FishInfo RetrieveInfo()
+    {
+        return fishinfo;
+    }
 
     public void Movement()
     {
+        if (!caught)
+        {
+            transform.position = Vector3.Lerp(transform.position, newgameobject.transform.position, 0.3f * Time.deltaTime);
+        }
+        else
+        {
+            
+        }
         
-        transform.position = Vector3.Lerp(transform.position, newgameobject.transform.position, 0.3f * Time.deltaTime);
     }
     //have to add that bullshitusaoihfiho
 
