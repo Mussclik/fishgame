@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class lerptesting : MonoBehaviour
 {
-    //i uh, "outsourced" this script to chatgpt
+    //fuck if i remember how this works
+    //it just does
+    //probably badly
 
 
 
@@ -43,7 +45,7 @@ public class lerptesting : MonoBehaviour
             
         Debug.DrawRay(transform.position, transform.TransformDirection(rayTest), Color.red);
         Debug.DrawRay(transform.position, newtransform.transform.TransformDirection(rayTest), Color.blue);
-
+        Debug.DrawRay(transform.position, Vector3.right, Color.green);
         Destroy(newtransform);
 
         if (debugtest)
