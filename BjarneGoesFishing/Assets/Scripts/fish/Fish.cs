@@ -11,8 +11,7 @@ public class Fish : MonoBehaviour
     [SerializeField] public FishInfo fishinfo;
     public SpriteRenderer spriteRenderer;
     [SerializeField] private bool debug;
-    [SerializeField]
-    LerpScript lerpScript;
+    [SerializeField] LerpScript lerpScript;
 
     #region FugoidMethodVars
     [SerializeField] private bool Increasing;
@@ -58,7 +57,7 @@ public class Fish : MonoBehaviour
                     (
                         transform.rotation.eulerAngles.x,
                         transform.rotation.eulerAngles.y,
-                        fishinfo.phugoidRange + 1f - 45f
+                        fishinfo.phugoidRange + 1f - 45f // make this shit adjustable, specifically the -45f
                    ));
             }
             else
