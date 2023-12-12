@@ -6,20 +6,25 @@ public class lerptesting : MonoBehaviour
 {
     //i uh, "outsourced" this script to chatgpt
 
+
+
+
     public AnimationCurve rotationCurve;
     [SerializeField, Range(0,5)] public float rotationDuration = 2f;
     private float elapsedTime = 0f;
-    private Quaternion startRotation;
     public Vector3 targetRotation;
+    [SerializeField]public Vector3 rayTest;
+    [SerializeField, Range(0,360)] public float rayx, rayy, rayz;
     [SerializeField, Range(0, 360)] float targetZ;
+    [SerializeField] bool debugtest;
 
     void Start()
     {
-        startRotation = transform.rotation;
     }
 
     void Update()
     {
+        rayTest = new Vector3(rayx, rayy, rayz);
         if (elapsedTime < rotationDuration)
         {
             elapsedTime += Time.deltaTime;
@@ -27,27 +32,39 @@ public class lerptesting : MonoBehaviour
             float curveTime = Mathf.Clamp01(elapsedTime / rotationDuration);
             float curveValue = rotationCurve.Evaluate(curveTime);
 
-            // Use the curve value to interpolate between start and target rotations
-            Quaternion newRotation = Quaternion.Lerp(startRotation, Quaternion.Euler(targetRotation), curveValue);
+            Quaternion newRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetRotation), curveValue);
 
-            // Apply the new rotation to the object
             transform.rotation = newRotation;
+            
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        GameObject newtransform = new GameObject();
+        newtransform.transform.rotation = transform.rotation;
+        newtransform.transform.rotation = Quaternion.Euler(targetRotation);
+            
+        Debug.DrawRay(transform.position, transform.TransformDirection(rayTest), Color.red);
+        Debug.DrawRay(transform.position, newtransform.transform.TransformDirection(rayTest), Color.blue);
+
+        Destroy(newtransform);
+
+        if (debugtest)
         {
-            // Example: Rotate to a new desired rotation when the space key is pressed
+            debugtest = false;
             Vector3 newDesiredRotation = new Vector3(0f, 0f, targetZ);
             RotateTo(newDesiredRotation);
         }
     }
-
-    // Method to initiate the rotation with a new desired rotation
     public void RotateTo(Vector3 desiredRotation)
     {
-        startRotation = transform.rotation;
         targetRotation = desiredRotation;
         elapsedTime = 0f;
     }
+
+
+
+
+
+
+
 
 
 

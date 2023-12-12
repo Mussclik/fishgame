@@ -22,7 +22,11 @@ public class ReadInfo : MonoBehaviour
     string readType;
 
     [SerializeField] TextAsset List;
+
+    [SerializeField]
     public List<FishInfo> fishList = new List<FishInfo>();
+
+    [SerializeField]
     public List<Sprite> fishSprites;
 
 

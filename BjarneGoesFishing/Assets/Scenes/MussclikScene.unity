@@ -166,6 +166,23 @@ MonoBehaviour:
   - ign, fishing rods
   - rod, Cheat Rod, A completely legit way to play, 99999, 99999, 99999, 99999
   List: {fileID: 4900000, guid: 60f3d135566a92a4fa280b1ea51785d4, type: 3}
+  fishList:
+  - name: koifish
+    description: koishi koishi
+    id: 0
+    value: 5
+    tier: 999
+    minDepth: 25
+    maxDepth: 50
+    phugoidRange: 0
+  - name: missfish
+    description: its seems to have failed rendering properly
+    id: 0
+    value: 0
+    tier: 0
+    minDepth: 0
+    maxDepth: 0
+    phugoidRange: 0
   fishSprites:
   - {fileID: 21300000, guid: c669bdece4c64b144b9e55c9e2a190bf, type: 3}
   - {fileID: 21300000, guid: 5100a8d4be123b8488ed9b2a46ad78f7, type: 3}
@@ -252,7 +269,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   rotationDuration: 2
   targetRotation: {x: 0, y: 0, z: 180}
-  z: 0
+  rayTest: {x: 0, y: 0, z: 0}
+  rayx: 5
+  rayy: 5
+  rayz: 0
+  targetZ: 0
+  debugtest: 0
 --- !u!212 &1331074332
 SpriteRenderer:
   m_ObjectHideFlags: 0
