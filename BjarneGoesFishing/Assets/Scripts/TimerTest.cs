@@ -7,12 +7,27 @@ using UnityEngine;
 [Serializable]
 public class TimerTest
 {
-    float timer;
-    float duration;
+    [SerializeField] private float timer;
+    [SerializeField] private float duration;
 
     internal TimerTest(float duration)
     {
         this.duration = duration;
+    }
+
+    public float elapsedTime
+    {
+        get 
+        { 
+            return timer; 
+        }
+    }
+    public float Duration
+    {
+        get 
+        {
+            return duration;       
+        }
     }
 
 
