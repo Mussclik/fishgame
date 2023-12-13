@@ -5,6 +5,7 @@ using UnityEngine;
 public class Store : MonoBehaviour
 {
     private int listOffset = 0;
+    public bool open;
     [SerializeField] GameObject unitPrefab;
     [SerializeField] Transform[] unitPositions = new Transform[4];
     [SerializeField] GameObject shop;
@@ -39,14 +40,23 @@ public class Store : MonoBehaviour
         }
         UpdateSelection();
     }
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.O))
+        {
+            Info.playermoney += 500;
+        }
+    }
     public void Open()
     {
+        open = true;
         listOffset = 0;
         Time.timeScale = 0;
         shop.SetActive(true);
     }
     public void Close()
     {
+        open = false;
         Time.timeScale = 1;
         shop.SetActive(false);
 
@@ -57,6 +67,12 @@ public class Store : MonoBehaviour
         {
             storeunit.bought.enabled = true;
         }
+    }
+
+    public void ButtonBuy(int button)
+    {
+        List<GameObject> unitlist = UpdateSelection();
+        Buy(unitlist[button].GetComponent<StoreUnit>(), Info.playermoney);
     }
     public void Next()
     {
@@ -75,8 +91,9 @@ public class Store : MonoBehaviour
         }
 
     }
-    public void UpdateSelection()
+    public List<GameObject> UpdateSelection()
     {
+        List<GameObject> newlist = new List<GameObject>();
         foreach (GameObject unit in units)
         {
             unit.SetActive(false);
@@ -86,8 +103,10 @@ public class Store : MonoBehaviour
             if (units[listOffset + i] != null)
             {
                 units[listOffset + i].SetActive(true);
+                newlist.Add(units[listOffset + 0]);
             }
         }
+        return newlist;
     }
 
 

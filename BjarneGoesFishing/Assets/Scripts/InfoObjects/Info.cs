@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Info
 {
+    public static int playermoney = 0;
     public string name;
     public string description;
     public int id;
