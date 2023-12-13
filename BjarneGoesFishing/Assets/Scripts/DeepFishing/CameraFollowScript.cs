@@ -7,8 +7,9 @@ public class CameraFollowScript : MonoBehaviour
 {
     [SerializeField] Transform transform1;
     [SerializeField] Transform transform2;
-    [SerializeField] [Range(0,10)] public float followSpeed;
+    [SerializeField][Range(0, 10)] public float followSpeed;
     internal Vector3 followingDirection;
+    [SerializeField] bool lockXAxis, lockYAxis, lockZAxis;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class CameraFollowScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 axislock = transform.position;
         if (transform2 != null)
         {
             Vector3 directionT1toT2 = transform2.position - transform1.position;
@@ -32,7 +34,20 @@ public class CameraFollowScript : MonoBehaviour
         }
         else if (transform1 != null)
         {
-            transform.position = Vector3.Lerp(transform.position, transform1.position, followSpeed * 0.1f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, transform1.position, followSpeed * 0.8f * Time.deltaTime);
+        }
+
+        if (lockXAxis)
+        {
+            transform.position = new Vector3(axislock.x, transform.position.y, transform.position.z);
+        }
+        if (lockYAxis) 
+        { 
+            transform.position = new Vector3(transform.position.x, axislock.y, transform.position.z); 
+        }
+        if (lockZAxis) 
+        { 
+            transform.position = new Vector3(transform.position.x, transform.position.y, axislock.z); 
         }
     }
 }

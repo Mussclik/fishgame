@@ -11,6 +11,7 @@ public class LerpScript
     TimerTest timerZ = new TimerTest(0);
     [SerializeField] private AnimationCurve rotationCurve;
     [SerializeField] public bool getGlobal = true;
+    private float speed;
 
     public float targetZ;
     public Vector3 targetRotation;
@@ -58,7 +59,7 @@ public class LerpScript
         Debug.DrawRay(transform.position, Vector3.right, Color.green);
         MonoBehaviour.Destroy(newtransform);
         */
-    }
+    } //terrible dont use
 
     public void UpdateRotationZ()
     {
@@ -78,25 +79,25 @@ public class LerpScript
             Vector3 currentRotation = new Vector3(0,0, transform.rotation.eulerAngles.z);
             Vector3 wantedRotation = new Vector3(0, 0, targetZ);
 
-            float newRotationZ = Quaternion.Lerp(Quaternion.Euler(currentRotation), Quaternion.Euler(wantedRotation), curveValue).eulerAngles.z;
-            Debug.Log(newRotationZ + " lerpscript updateZ newrotation");
+            float newRotationZ = Quaternion.Lerp(Quaternion.Euler(currentRotation), Quaternion.Euler(wantedRotation), curveValue * speed).eulerAngles.z;
             Vector3 newRotation = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, newRotationZ);
 
             transform.rotation = Quaternion.Euler(newRotation);
         }
     }
 
-    public void NewRotationObject(Vector3 desiredRotation)
+    public void NewRotationObject(Vector3 desiredRotation) // terrible dont use
     {
         targetRotation = desiredRotation;
         timer.Restart();
     }
-    public void RotateZ(float desiredZ)
+    public void RotateZ(float desiredZ, float speed = 1f)
     {
+        this.speed = speed;
         targetZ = desiredZ;
         timerZ.Restart();
     }
-    public void RotateZ(Transform desiredZTransform)
+    public float RotateZ(Transform desiredZTransform, float speed = 1f) //ChadGPT carry with the SignedAngle
     {
         // Calculate the direction vector from the fish to the hook
         Vector3 direction = desiredZTransform.position - transform.position;
@@ -110,16 +111,33 @@ public class LerpScript
         // Set the targetZ by adding the angle difference to the current rotation
         targetZ = transform.eulerAngles.z + angle;
         timerZ.Restart();
+        this.speed = speed;
+        return targetZ;
+    }
+    public float GetDirectionToObject(Transform desiredZTransform)
+    {
+        // Calculate the direction vector from the fish to the hook
+        Vector3 direction = desiredZTransform.position - transform.position;
+
+        // Calculate the rotation to look at the hook
+        Quaternion rotationToTarget = Quaternion.LookRotation(Vector3.forward, direction);
+
+        // Calculate the angle between the current right direction and the target direction
+        float angle = Vector3.SignedAngle(transform.right, direction.normalized, Vector3.forward);
+
+        // Set the targetZ by adding the angle difference to the current rotation
+
+        return transform.eulerAngles.z + angle;
     }
 
-    public Vector3 GetDesiredPosition(Transform objectToRotateTo)
+    public Vector3 GetDesiredPosition(Transform objectToRotateTo)// terrible dont use
     {
         Vector3 rotationTargetVector3 = objectToRotateTo.position - transform.position;
         Quaternion rotationToTarget = Quaternion.LookRotation(rotationTargetVector3, new Vector3(1,1,0));
         rotationTargetVector3 = rotationToTarget.eulerAngles;
         return rotationTargetVector3;
     }
-    public Vector3 GetDesiredPosition(Vector3 objectToRotateTo)
+    public Vector3 GetDesiredPosition(Vector3 objectToRotateTo)// terrible dont use
     {
         Vector3 rotationTargetVector3 = objectToRotateTo - transform.position;
         Quaternion rotationToTarget = Quaternion.LookRotation(rotationTargetVector3, new Vector3(1, 1, 0));

@@ -63,18 +63,19 @@ public class Fish : MonoBehaviour
         {
             Debug.DrawRay(transform.position, hook.position - transform.position, Color.magenta); //it works
             //RotationTimer();
-            RotateTowardsObject(hook,fugoidTimer);
+            RotateTowardsObject(hook,fugoidTimer, 3);
             Movement();
         }
         else if (!caught)
         {
-            Fugoid(fishinfo.phugoidRange, startrotation, fugoidTimer);
+            Fugoid(fishinfo.phugoidRange, startrotation, fugoidTimer, 5);
             Movement();
         }
         else
         {
             //RotationTimer();
-            transform.position = Vector3.Lerp(transform.position, new Vector3(hook.position.x,hook.position.y - 3, hook.position.z), 0.5f);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(hook.position.x,hook.position.y - 1.7f, hook.position.z), 0.5f);
+            Fugoid(10,lerpScript.GetDirectionToObject(hook), fugoidTimer, 0.5f, 10f);
         }
         
     }
@@ -96,24 +97,24 @@ public class Fish : MonoBehaviour
         caught = true;
         lerpScript.getGlobal = false;
     }
-    private void Fugoid(float range, float baserotation, TimerTest timer)
+    private void Fugoid(float range, float baserotation, TimerTest timer, float duration, float speed = 1f)
     {
         timer.Update();
         if (timer.Check())
         {
-            timer.Restart();
+            timer.Start(duration);
             float newDirection;
             if (Increasing)
             {
                 Increasing = false;
                 newDirection = baserotation + range + 1f;
-                lerpScript.RotateZ(newDirection);
+                lerpScript.RotateZ(newDirection, speed);
             }
             else
             {
                 Increasing = true;
                 newDirection = baserotation - range - 1f;
-                lerpScript.RotateZ(newDirection);
+                lerpScript.RotateZ(newDirection, speed);
             }
 
 
@@ -214,23 +215,13 @@ public class Fish : MonoBehaviour
 
         */
     }
-    private void RotateTowardsObject(Transform objectToGo, TimerTest timer)
+    private void RotateTowardsObject(Transform objectToGo, TimerTest timer, float duration)
     {
         timer.Update();
         if (timer.Check())
         {
-            timer.Restart();
+            timer.Start(duration);
             lerpScript.RotateZ(objectToGo);
-        }
-    }
-    private void RotationTimer(Vector3 targetrotation)
-    {
-        caughtRotationTimer.Update();
-        if (caughtRotationTimer.Check())
-        {
-            caughtRotationTimer.Restart();
-
-            lerpScript.NewRotationObject(targetrotation);
         }
     }
 
