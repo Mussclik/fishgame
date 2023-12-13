@@ -12,8 +12,7 @@ public class Store : MonoBehaviour
     [SerializeField] List<ItemInfo> items;
     [SerializeField] List<Sprite> sprites;
     [SerializeField] List<Sprite> fishrodInfo;
-    [SerializeField] List<UnityEngine.UI.Button> arrows;
-    [SerializeField] List<UnityEngine.UI.Button> buttons;
+
 
     public void Start()
     {
@@ -21,11 +20,12 @@ public class Store : MonoBehaviour
         Debug.Log(items.Count);
         for (int i = 0; i < items.Count; i++)
         {
-            temp += 1;
+            
             if (temp > 3)
             {
                 temp = 0;
             }
+            
 
             GameObject newUnit = Instantiate(unitPrefab, unitPositions[temp].position, Quaternion.identity, shop.transform);
             StoreUnit unitIteminfo = newUnit.GetComponent<StoreUnit>();
@@ -35,6 +35,7 @@ public class Store : MonoBehaviour
             unitIteminfo.UpdateInfo();
 
             units.Add(newUnit);
+            temp += 1;
         }
         UpdateSelection();
     }
