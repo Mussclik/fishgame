@@ -8,59 +8,92 @@ using UnityEngine.XR;
 public class Fish : MonoBehaviour
 {
     public int id;
-    [SerializeField] public FishInfo fishinfo;
-    public SpriteRenderer spriteRenderer;
     [SerializeField] private bool debug;
-    [SerializeField] LerpScript lerpScript;
-    [SerializeField] internal bool caught = false;
-    [SerializeField] Transform hook;
-    [SerializeField] private Transform mouth;
-
-    #region FugoidMethodVars
     [SerializeField] private bool Increasing;
     [SerializeField] private bool setValue;
-    [SerializeField] GameObject newgameobject;
+    [SerializeField] public bool attract;
+
+                     public SpriteRenderer spriteRenderer;
+    [SerializeField] internal bool caught = false;
+    [SerializeField] public FishInfo fishinfo;
+    [SerializeField] public Transform hook;
+    [SerializeField] private Transform mouth;
+    [SerializeField] private LerpScript lerpScript;
 
 
-    float fugoidTimer = 0;
-    float fugoidMaxTime = 2;
+
+
+    #region FugoidMethodVars
+    [SerializeField] private GameObject newgameobject;
+    [SerializeField, Range(0, 360)] private float startrotation;
+    [SerializeField] private TimerTest caughtRotationTimer;
+    [SerializeField] private TimerTest fugoidTimer;
     #endregion
 
     private void Start()
     {
+        caughtRotationTimer = new TimerTest(2);
+        fugoidTimer = new TimerTest(2);
+        startrotation = transform.rotation.eulerAngles.z;
         lerpScript = new LerpScript(transform);
-        Debug.Log(transform.TransformDirection(lerpScript.forward));
+    }
+    private void OnEnable()
+    {
+        hook = GameObject.FindWithTag("hook").transform;
     }
 
     void Update()
     {
-        if (!caught)
-        {
-            lerpScript.UpdateRotation();
-            Fugoid();
-            
-        }
-        else
-        { 
-            
-        }
-        Movement();
+        lerpScript.UpdateRotation();
         if (debug)
         {
-            debug = false;
-            UpdateInfo(id);
+
         }
+        else if (attract)
+        {
+            Debug.DrawRay(transform.position, hook.position-transform.position, Color.black); //it works
+            Debug.DrawRay(transform.position, hook.position - transform.position, Color.magenta); //it works
+            //RotationTimer();
+            Movement();
+        }
+        else if (!caught)
+        {
+            Fugoid(fishinfo.phugoidRange, startrotation, fugoidTimer);
+            Movement();
+        }
+        else
+        {
+
+            //RotationTimer();
+            transform.position = Vector3.Lerp(transform.position, new Vector3(hook.position.x,hook.position.y - 3, hook.position.z), 0.5f);
+        }
+        
     }
     public void Release()
     {
-
+        StartCoroutine(ReleaseWait(5));
     }
-    private void Fugoid()
+    IEnumerator ReleaseWait(float time)
     {
-        fugoidTimer += Time.deltaTime;
-        if (fugoidTimer > fugoidMaxTime)
+        fishinfo.speed += 5;
+        lerpScript.GiveNewInfo(transform, new Vector3(0, 0, startrotation));
+        yield return new WaitForSeconds(time);
+        caught = false;
+        fishinfo.speed -= 5;
+        lerpScript.getGlobal = true;
+    }
+    public void Catch()
+    {
+        caught = true;
+        lerpScript.getGlobal = false;
+        lerpScript.rotationDuration = 2;
+    }
+    private void Fugoid(float range, float baserotation, TimerTest timer)
+    {
+        fugoidTimer.Update();
+        if (fugoidTimer.Check())
         {
-            fugoidTimer = 0;
+            fugoidTimer.Restart();
             if (Increasing)
             {
                 Increasing = false;
@@ -68,7 +101,7 @@ public class Fish : MonoBehaviour
                     (
                         transform.rotation.eulerAngles.x,
                         transform.rotation.eulerAngles.y,
-                        fishinfo.phugoidRange + 1f - 45f // make this shit adjustable, specifically the -45f
+                        range + 1f + baserotation // make this shit adjustable, specifically the -45f
                    ));
             }
             else
@@ -78,7 +111,7 @@ public class Fish : MonoBehaviour
                     (
                         transform.rotation.eulerAngles.x,
                         transform.rotation.eulerAngles.y,
-                        -fishinfo.phugoidRange - 1f - 45f
+                        -range - 1f + baserotation
                    ));
             }
         }
@@ -153,17 +186,20 @@ public class Fish : MonoBehaviour
 
         */
     }
-
-    public float AbsRotation(float value)
+    private void RotationTimer(Vector3 targetrotation)
     {
-        while (value > 360)
+        caughtRotationTimer.Update();
+        if (caughtRotationTimer.Check())
         {
-            value -= 360;
+            caughtRotationTimer.Restart();
+
+            lerpScript.GiveNewInfo(transform, targetrotation);
         }
-        while (value < 0)
-        {
-            value += 360;
-        }
+    }
+
+    public static float AbsRotation(float value)
+    {
+        value %= value;
         return value;
     }
 

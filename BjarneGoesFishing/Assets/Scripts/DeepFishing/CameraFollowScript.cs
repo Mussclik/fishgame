@@ -24,7 +24,7 @@ public class CameraFollowScript : MonoBehaviour
         {
             Vector3 directionT1toT2 = transform2.position - transform1.position;
 
-            Vector3 pointBetweenTranforms = directionT1toT2 / 3 + transform1.position;
+            Vector3 pointBetweenTranforms = directionT1toT2 + transform1.position;
 
             followingDirection = pointBetweenTranforms - transform.position;
 
