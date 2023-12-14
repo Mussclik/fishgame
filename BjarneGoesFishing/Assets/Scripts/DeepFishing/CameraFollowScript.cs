@@ -58,6 +58,9 @@ public class CameraFollowScript : MonoBehaviour
 
     public static Vector3 ClampVector3(Vector3 vectorToClamp, Vector3 min, Vector3 max)
     {
+        Vector3[] minMax = SortVector3Size(min, max);
+        min = minMax[0];
+        max = minMax[1];
         float vectorX, vectorY, vectorZ;
         vectorX = Mathf.Clamp(vectorToClamp.x, min.x, max.x);
         vectorY = Mathf.Clamp(vectorToClamp.y, min.y, max.y);

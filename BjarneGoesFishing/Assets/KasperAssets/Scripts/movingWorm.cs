@@ -2,27 +2,31 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class movingWorm : MonoBehaviour
 {
-
-
-    public Transform wormHitBox;
-    public Transform upperTransForm;
-    public Transform lowerTransForm;
+    public List<Transform> maxTransforms;
+    public List<Transform> successTransforms;
     public bool caughtFish = false;
     public float moveSpeed = 3f;
     private bool movingUp = true;
+
+    //devious william hijack
+    [SerializeField] Transform bobber;
+    [SerializeField] BobberManager bobberinfo;
     
     // Start is called before the first frame update
     void Start()
     {
-        SetPosition(upperTransForm, new Vector2(0.0f, -0.77f));
-        SetSecondPosition(lowerTransForm, new Vector2(0.0f, -1.34f));
-        
+    }
 
+    public void GiveInfo(BobberManager info, Transform bobber)
+    {
+        this.bobber = bobber;
+        bobberinfo = info;
     }
 
     void SetSecondPosition(Transform secondTransformTomodify, Vector2 secondNewPosition)
@@ -39,18 +43,21 @@ public class movingWorm : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (wormHitBox.position.y >= lowerTransForm.position.y && wormHitBox.position.y <= upperTransForm.position.y && Input.GetKeyDown(KeyCode.E))
+        //if (wormHitBox.position.y >= lowerTransForm.position.y && wormHitBox.position.y <= upperTransForm.position.y && Input.GetKeyDown(KeyCode.E))
+        //{
+        //    caughtFish = true;
+        //    Debug.Log("You Caught The Fish!");
+        //}
+        if (transform.position.y <= successTransforms[1].position.y && transform.position.y >= successTransforms[0].position.y && Input.GetKeyDown(KeyCode.E))
         {
-            caughtFish = true;
-            Debug.Log("You Caught The Fish!");
+            Debug.Log("Reelingfish");
+            bobberinfo.ReelingFish();
         }
-
-
        
         if (movingUp)
         {
             transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
-            if (transform.position.y >= 1.68)
+            if (transform.position.y >= maxTransforms[1].position.y)
             {
                 movingUp = false;
             }
@@ -59,7 +66,7 @@ public class movingWorm : MonoBehaviour
         {
             transform.Translate(Vector2.down * moveSpeed * Time.deltaTime);
 
-            if (transform.position.y <= -4.42)
+            if (transform.position.y <= maxTransforms[0].position.y)
             {
                 movingUp = true;
             }

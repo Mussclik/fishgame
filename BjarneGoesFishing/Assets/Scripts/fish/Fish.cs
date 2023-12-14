@@ -39,6 +39,7 @@ public class Fish : MonoBehaviour
         lerpScript = new LerpScript(transform);
         hook = GameObject.FindWithTag("hook").transform;
         hookScript = hook.gameObject.GetComponent<BobberManager>();
+        movementObject = transform.GetChild(0).gameObject;
     }
     private void OnEnable()
     {
@@ -48,39 +49,38 @@ public class Fish : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(transform.position, hook.position);
-        Debug.Log(distance.ToString() + " distance and attractdistance " + fishinfo.baitRange.ToString());
         lerpScript.UpdateRotationZ();
+
+
         if (runAway)
         {
             RotateTowardsObject(hook, fugoidTimer, 3, true);
             Movement(30);
         }
-
-
-
         else if (attract) // move towards hook
         {
             Debug.DrawRay(transform.position, hook.position - transform.position, Color.magenta); //it works
             //RotationTimer();
             RotateTowardsObject(hook,fugoidTimer, 3);
             Movement();
-            if (distance < 1f)
+            if (hookScript.caughtFish)
+            {
+                attract = false;
+            }
+            if (distance < 1f && !hookScript.caughtFish)
             {
                 caught = true;
                 attract = false;
                 hookScript.CatchFish();
             }
         }
-
-
-
         else if (!caught)
         {
             
             Fugoid(fishinfo.phugoidRange, startrotation, fugoidTimer, 2);
             Movement();
             
-            if ( distance < fishinfo.baitRange * 2 && hookScript.caughtFish)
+            if (distance < fishinfo.baitRange * 3 && hookScript.caughtFish)
             {
                 runAway = true;
                 fugoidTimer.Start(4);
@@ -150,8 +150,6 @@ public class Fish : MonoBehaviour
             {
                 increasing = true;
             }
-
-
             /*
             if (Increasing)
             {
@@ -176,7 +174,6 @@ public class Fish : MonoBehaviour
                 lerpScript.NewRotationObject(newvector);
             }
             */
-            Debug.Log(newDirection.ToString() + " fugoid newvector");
         }
         /*
         //Debug.Log(transform.rotation.eulerAngles.z + "euler Z");
@@ -282,6 +279,7 @@ public class Fish : MonoBehaviour
 
     public void Movement()
     {
+        movementObject.transform.localPosition = new Vector3(fishinfo.speed, 0, 0);
         if (!caught)
         {
             transform.position = Vector3.Lerp(transform.position, movementObject.transform.position, 0.3f * Time.deltaTime);
