@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DoorToShop : MonoBehaviour
 {
-    public string sceneToLoad;
+    public int sceneToLoad;
 
     private void OnTriggerEnter2D(Collider2D other)
     {

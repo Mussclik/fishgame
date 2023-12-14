@@ -59,6 +59,7 @@ public class MainMenu : MonoBehaviour
 
     void SelectButton(int index)
     {
+        Debug.Log(index);
         buttons[index].Select();
         buttons[index].image.color = Color.cyan; // Highlight the selected button
     }

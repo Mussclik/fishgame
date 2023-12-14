@@ -7,8 +7,9 @@ using UnityEngine;
 [Serializable]
 public class TimerTest
 {
-    [SerializeField] private float timer;
+    [SerializeField] private float timer = 0;
     [SerializeField] private float duration;
+    [SerializeField] public bool enabled = true;
 
     internal TimerTest(float duration)
     {
@@ -33,6 +34,7 @@ public class TimerTest
 
     public bool Check()
     {
+        
         if (timer >= duration)
         {
             return true;
@@ -53,6 +55,10 @@ public class TimerTest
     }
     public void Update()
     {
-        timer += Time.deltaTime;
+        if (enabled)
+        {
+            timer += Time.deltaTime;
+        }
+
     }
 }

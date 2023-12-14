@@ -11,6 +11,7 @@ public class Card : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public TextMeshPro namerenderer;
     public TextMeshPro descriptionRenderer;
+    public TextMeshPro value;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +30,8 @@ public class Card : MonoBehaviour
 
     void UpdateInfo(int id)
     {
+        id = fishinfo.id;
+        value.text = fishinfo.value.ToString();
         fishinfo = GeneralManager.readfish.fishList[id];
         namerenderer.text = fishinfo.name;
         descriptionRenderer.text = fishinfo.description;

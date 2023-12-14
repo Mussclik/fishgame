@@ -9,6 +9,18 @@ EditorBuildSettings:
     path: Assets/MarkusAssets/Scenes/main menu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/MussclikScene.unity
+    path: Assets/WilliamAssets/Scenes/MussclikScene.unity
     guid: 50fcc69b24df53045bfbc82c02f2f58e
+  - enabled: 1
+    path: Assets/MoltasAssets/Scenes/BjarneShop.unity
+    guid: 8877646fa9a992c4ca10cf5a508897dc
+  - enabled: 1
+    path: Assets/MoltasAssets/Scenes/Outside.unity
+    guid: 4a451e000eef0d7448020b2c32ec9a88
+  - enabled: 0
+    path: Assets/MoltasAssets/Scenes/Map.unity
+    guid: 10a0f2499261cf34a9a678d980f3e687
+  - enabled: 1
+    path: Assets/MoltasAssets/Scenes/FishingScene.unity
+    guid: 334af4ce732d2dd42b3fc8990a97b259
   m_configObjects: {}

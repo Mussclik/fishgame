@@ -77,9 +77,9 @@ public class GoFishing : MonoBehaviour
         return false;
     }
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        // Exempel på extra logik när objektet befinner sig inuti triggern
-        Debug.Log("Objektet är inuti triggern!");
-    }
+    //void OnTriggerStay2D(Collider2D other)
+    //{
+    //    // Exempel på extra logik när objektet befinner sig inuti triggern
+    //    Debug.Log("Objektet är inuti triggern!");
+    //}
 }

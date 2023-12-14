@@ -12,7 +12,7 @@ public class BobberManager : MonoBehaviour
     [SerializeField] UnityEngine.Transform lineOffset;
     [SerializeField] UnityEngine.Transform returnPoint;
     [SerializeField] public bool caughtFish;
-    [SerializeField] bool recentFailedCatch;
+    [SerializeField] public bool recentFailedCatch;
     [SerializeField] bool movement;
     TimerTest timer = new TimerTest(3);
     TimerTest lerpTimer = new TimerTest(0);
@@ -24,8 +24,12 @@ public class BobberManager : MonoBehaviour
     [SerializeField] GameObject fishCatcher;
     [SerializeField] AnimationCurve animationCurve;
     [SerializeField] UnityEngine.Transform moveToHook;
-    
-    
+    [SerializeField] movingWorm wormscript;
+    FishInfo caughtfishinfo;
+    int failureCount;
+
+
+
 
     void Start()
     {
@@ -43,11 +47,30 @@ public class BobberManager : MonoBehaviour
             float curveValue = animationCurve.Evaluate(curveTime);
 
             transform.position = Vector3.Lerp(transform.position, moveToHook.position, curveValue);
+            
+        }
+        if (lerpTimer.Check())
+        {
+            
+            if (wormscript != null && !wormscript.gameObject.activeSelf)
+            {
+                Debug.Log("turning on wormscript object");
+                wormscript.gameObject.transform.localPosition = new Vector3(wormscript.gameObject.transform.localPosition.x, 5, wormscript.gameObject.transform.localPosition.z);
+                wormscript.gameObject.SetActive(true);
+            }
+
         }
 
 
         currentDepth = Vector3.Distance(transform.position, new Vector3(transform.position.x, 0, transform.position.z)) * 0.5f;
         depthMeter.text = "Current Depth: " + currentDepth.ToString("0.0") + "m";
+
+        if (caughtFish && currentDepth <= 1f)
+        {
+
+        }
+
+
         if (movement)
         {
             Vector3 newMovement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -70,30 +93,44 @@ public class BobberManager : MonoBehaviour
 
     }
         
-    public void CatchFish()
+    public void CatchFish(FishInfo fishinfo)
     {
+        caughtfishinfo = fishinfo;
         caughtFish = true;
         movement = false;
         fishCatcher.SetActive(true);
-        movingWorm script = fishCatcher.transform.GetChild(1).gameObject.GetComponent<movingWorm>();
-        script.GiveInfo(this, transform);
+        wormscript = fishCatcher.transform.GetChild(1).gameObject.GetComponent<movingWorm>();
+        wormscript.GiveInfo(this, transform);
         moveToHook.position = transform.position;
+        failureCount = 0;
     }
     public void ReelingFish()
     {
-        moveToHook.position += (Vector3.MoveTowards(transform.position, returnPoint.position, 2) - moveToHook.position);
-        if (lerpTimer.elapsedTime >= lerpTimer.Duration)
+        if (lerpTimer.Check())
         {
-            lerpTimer.Start(2);
+            Debug.Log("turning of wormscript object");
+            wormscript.gameObject.SetActive(false);
+            lerpTimer.Start(0.5f);
+            moveToHook.position += (Vector3.MoveTowards(transform.position, returnPoint.position, 5) - moveToHook.position);
         }
-        
     }
     public void FishEscape()
     {
-        recentFailedCatch = true;
-        movement = true;
-        fishCatcher.SetActive(false);
+        caughtfishinfo = null;
+        failureCount++;
+        if (failureCount > 2)
+        {
+            recentFailedCatch = true;
+            movement = true;
+            fishCatcher.SetActive(false);
 
-        timer.Restart();
+            timer.Start(0);
+        }
+
+    }
+
+    private void ChangeSceneSendFish(FishInfo fishinfo)
+    {
+
     }
 }

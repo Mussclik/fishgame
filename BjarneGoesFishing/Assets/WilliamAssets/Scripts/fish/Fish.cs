@@ -54,25 +54,40 @@ public class Fish : MonoBehaviour
 
         if (runAway)
         {
+            fugoidTimer.Update();
+            //Debug.Log($"ElapsedTime:{fugoidTimer.elapsedTime.ToString()} Duration:{fugoidTimer.Duration}");
+            if (fugoidTimer.Check())
+            {
+                Debug.Log("stopped running away");
+                runAway = false;
+            }
             RotateTowardsObject(hook, fugoidTimer, 3, true);
             Movement(30);
+
         }
         else if (attract) // move towards hook
         {
             Debug.DrawRay(transform.position, hook.position - transform.position, Color.magenta); //it works
             //RotationTimer();
-            RotateTowardsObject(hook,fugoidTimer, 3);
+            RotateTowardsObject(hook,fugoidTimer, 2);
             Movement();
             if (hookScript.caughtFish)
             {
                 attract = false;
+                runAway = true;
+                fugoidTimer.Start(4);
             }
             if (distance < 1f && !hookScript.caughtFish)
             {
                 caught = true;
                 attract = false;
-                hookScript.CatchFish();
+                hookScript.CatchFish(fishinfo);
             }
+            if (distance < fishinfo.baitRange * 1.1f)
+            {
+                attract = false;
+            }
+
         }
         else if (!caught)
         {
@@ -89,15 +104,16 @@ public class Fish : MonoBehaviour
             {
                 attract = true;
             }
-            else
-            {
-                attract = false;
-                runAway = false;
-            }
         }
 
         else //caught
         {
+            if (hookScript.recentFailedCatch)
+            {
+                caught = false;
+                runAway = true;
+                fugoidTimer.Start(4);
+            }
             //RotationTimer();
             transform.position = Vector3.Lerp(transform.position, new Vector3(hook.position.x,hook.position.y - 2.3f, hook.position.z), 0.5f);
             Fugoid(10,lerpScript.GetDirectionToObject(hook), fugoidTimer, 0.5f, 10f);

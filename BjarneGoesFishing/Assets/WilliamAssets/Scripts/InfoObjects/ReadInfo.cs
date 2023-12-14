@@ -50,7 +50,9 @@ public class ReadInfo : MonoBehaviour
                 switch (readType)
                 {
                     case "f": //creature card
-                        fishList.Add(ConvertToFish(lines[i]));
+                        FishInfo newfish = ConvertToFish(lines[i]);
+                        newfish.id = fishList.Count;
+                        fishList.Add(newfish);
                         break;
 
                     case "ignore":

@@ -33,7 +33,7 @@ public class InToBoat : MonoBehaviour
                     if (timer <= 0)
                     {
                         Debug.Log("hej");
-                        SceneManager.LoadScene("Map");
+                        SceneManager.LoadScene(4);
                     }
                     FörflyttaObjekt();
                     isInBoat = true;

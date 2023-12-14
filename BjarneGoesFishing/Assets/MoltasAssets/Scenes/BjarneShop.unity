@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 240834508}
   - component: {fileID: 240834510}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: ShopInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a70afb8f5e75043af387f001107db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 
+  sceneToLoad: 0
 --- !u!1 &249329666
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 249329668}
   - component: {fileID: 249329667}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -555,12 +555,12 @@ GameObject:
   - component: {fileID: 785293018}
   - component: {fileID: 785293020}
   m_Layer: 0
-  m_Name: GameObject (2)
+  m_Name: DoorToShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &785293018
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -633,7 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a70afb8f5e75043af387f001107db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 
+  sceneToLoad: 0
 --- !u!1 &816037121
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,6 +811,7 @@ GameObject:
   - component: {fileID: 866189605}
   - component: {fileID: 866189610}
   - component: {fileID: 866189609}
+  - component: {fileID: 866189611}
   m_Layer: 0
   m_Name: Bjarne
   m_TagString: Player
@@ -985,6 +986,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.6127014, y: 9.6}
   m_EdgeRadius: 0
+--- !u!95 &866189611
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866189604}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4b9ddd326a5760545b49738a3021eccd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &926800731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,7 +1172,7 @@ GameObject:
   - component: {fileID: 1047508163}
   - component: {fileID: 1047508162}
   m_Layer: 0
-  m_Name: Square (1)
+  m_Name: DoorToShop2
   m_TagString: ShopDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1213,7 +1235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a70afb8f5e75043af387f001107db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Bajs
+  sceneToLoad: 3
 --- !u!212 &1047508164
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1604,7 +1626,6 @@ GameObject:
   - component: {fileID: 1822235236}
   - component: {fileID: 1822235235}
   - component: {fileID: 1822235234}
-  - component: {fileID: 1822235237}
   m_Layer: 0
   m_Name: w
   m_TagString: Untagged
@@ -1686,22 +1707,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1822235237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1822235233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fb177e5d631bca48a4aaf81d4acddbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  images:
-  - {fileID: -1811012833, guid: 86f62f86baf26e84da3ca1b962c7b42d, type: 3}
-  - {fileID: 0}
-  displayImage: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

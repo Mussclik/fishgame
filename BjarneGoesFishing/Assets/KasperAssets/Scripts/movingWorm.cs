@@ -53,6 +53,11 @@ public class movingWorm : MonoBehaviour
             Debug.Log("Reelingfish");
             bobberinfo.ReelingFish();
         }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("failed buh");
+            bobberinfo.FishEscape();
+        }
        
         if (movingUp)
         {
