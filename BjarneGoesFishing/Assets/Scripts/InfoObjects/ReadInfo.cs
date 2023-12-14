@@ -101,10 +101,15 @@ public class ReadInfo : MonoBehaviour
         {
             name = parts[1], //uuuuhhhh, i think so int.tryparse(string, output int) ?(if)  truevalue : falsevalue     so if tryparse returns true, the line will give whats left of the :, but if false then it returns what is to the right.
             description = AddNewLines(parts[2], "¤"), //because of some fucky wuckys, the notes are out of order
+
             value = int.TryParse(parts[3], out int output) ? output : 0, // int.TryParse(parts[4]) returns a true/false if it can convert it or not, you can give it an out variable to put the result into
             tier = int.TryParse(parts[4], out output) ? output : 0, //baseattack = AttemptConvertToInt, if true, return output, if false return 0;     ? output = if true return output,   : 0 = if false return 0
             minDepth = int.TryParse(parts[5], out output) ? output : 0,
             maxDepth = int.TryParse(parts[6], out output) ? output : 0, //buh buh
+
+            phugoidRange = float.TryParse(parts[7], out float output2) ? output2 : 0, //buh buh
+            baitRange = float.TryParse(parts[8], out output2) ? output2 : 0,
+            speed = float.TryParse(parts[9], out output2) ? output2 : 0,
         };
     }
         //return new FishInfo()

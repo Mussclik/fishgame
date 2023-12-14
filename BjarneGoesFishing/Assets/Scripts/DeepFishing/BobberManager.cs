@@ -7,37 +7,51 @@ using UnityEngine.UIElements;
 public class BobberManager : MonoBehaviour
 {
     [SerializeField] internal int currentTier;
-    // Start is called before the first frame update
+    [SerializeField] Transform lineOffset;
+    [SerializeField] Transform returnPoint;
+    [SerializeField] public bool caughtFish;
+    [SerializeField] bool recentFailedCatch;
+    [SerializeField] bool movement;
+    TimerTest timer = new TimerTest(3);
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector3 newMovement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        transform.Translate(newMovement.normalized * Time.deltaTime * 10);
-    }
 
-    void ResetBobber()
-    {
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag.ToLower() == "fish")
+        if (movement)
         {
-            Fish fish = collision.GetComponent<Fish>();
-            if (currentTier >= fish.fishinfo.tier)
+            Vector3 newMovement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            transform.Translate(newMovement.normalized * Time.deltaTime * 10);
+            lineOffset.position = new Vector3(transform.position.x * 0.5f, lineOffset.position.y, lineOffset.position.z);
+        }
+
+        if (recentFailedCatch)
+        {
+            timer.Update();
+            if (timer.Check())
             {
-                fish.attract = true;
+                timer.Restart();
+                caughtFish = false;
+
             }
         }
+
     }
-    private void OnTriggerExit2D(Collider2D collision)
+        
+    public void CatchFish()
     {
-       
+        
+    }
+    public void ReelingFish()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, returnPoint.position, 3 * Time.deltaTime);
+    }
+    public void FishEscape()
+    {
+        recentFailedCatch = true;
+        timer.Restart();
     }
 }

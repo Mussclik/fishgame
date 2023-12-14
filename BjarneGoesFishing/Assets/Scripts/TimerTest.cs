@@ -14,7 +14,7 @@ public class TimerTest
     {
         this.duration = duration;
     }
-
+    #region getset
     public float elapsedTime
     {
         get 
@@ -29,7 +29,7 @@ public class TimerTest
             return duration;       
         }
     }
-
+    #endregion
 
     public bool Check()
     {

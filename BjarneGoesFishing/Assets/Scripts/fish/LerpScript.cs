@@ -91,13 +91,20 @@ public class LerpScript
         targetRotation = desiredRotation;
         timer.Restart();
     }
-    public void RotateZ(float desiredZ, float speed = 1f)
+    public void RotateZ(float desiredZ, float speed = 1f, bool revers = false)
     {
         this.speed = speed;
-        targetZ = desiredZ;
+        if (!revers)
+        {
+            targetZ = desiredZ;
+        }
+        else
+        {
+            targetZ = -desiredZ;
+        }
         timerZ.Restart();
     }
-    public float RotateZ(Transform desiredZTransform, float speed = 1f) //ChadGPT carry with the SignedAngle
+    public float RotateZ(Transform desiredZTransform, float speed = 1f, bool revers = false) //ChadGPT carry with the SignedAngle
     {
         // Calculate the direction vector from the fish to the hook
         Vector3 direction = desiredZTransform.position - transform.position;
@@ -109,12 +116,20 @@ public class LerpScript
         float angle = Vector3.SignedAngle(transform.right, direction.normalized, Vector3.forward);
 
         // Set the targetZ by adding the angle difference to the current rotation
-        targetZ = transform.eulerAngles.z + angle;
+        if (!revers)
+        {
+            targetZ = transform.eulerAngles.z + angle;
+        }
+        else
+        {
+            targetZ = transform.eulerAngles.z - angle;
+        }
+        
         timerZ.Restart();
         this.speed = speed;
         return targetZ;
     }
-    public float GetDirectionToObject(Transform desiredZTransform)
+    public float GetDirectionToObject(Transform desiredZTransform, bool reverse = false)
     {
         // Calculate the direction vector from the fish to the hook
         Vector3 direction = desiredZTransform.position - transform.position;
@@ -127,7 +142,15 @@ public class LerpScript
 
         // Set the targetZ by adding the angle difference to the current rotation
 
-        return transform.eulerAngles.z + angle;
+        if (reverse)
+        {
+            return transform.eulerAngles.z - angle;
+        }
+        else
+        {
+            return transform.eulerAngles.z + angle;
+        }
+        
     }
 
     public Vector3 GetDesiredPosition(Transform objectToRotateTo)// terrible dont use

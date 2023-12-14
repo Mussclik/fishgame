@@ -6,6 +6,10 @@ using UnityEngine;
 [Serializable]
 public class FishInfo : Info
 {
+    //:info
+    //name
+    //description
+
     public int value;
     public int tier;
     public int minDepth; 

@@ -12,6 +12,8 @@ public class Fish : MonoBehaviour
     [SerializeField] private bool Increasing;
     [SerializeField] private bool setValue;
     [SerializeField] public bool attract;
+    [SerializeField] public float attractRange;
+    [SerializeField] bool runAway;
 
                      public SpriteRenderer spriteRenderer;
     [SerializeField] internal bool caught = false;
@@ -28,6 +30,7 @@ public class Fish : MonoBehaviour
     [SerializeField, Range(0, 360)] private float startrotation;
     [SerializeField] private TimerTest caughtRotationTimer;
     [SerializeField] private TimerTest fugoidTimer;
+    BobberManager hookScript;
     #endregion
 
     private void Start()
@@ -36,6 +39,8 @@ public class Fish : MonoBehaviour
         fugoidTimer = new TimerTest(2);
         startrotation = transform.rotation.eulerAngles.z;
         lerpScript = new LerpScript(transform);
+        hook = GameObject.FindWithTag("hook").transform;
+        hookScript = hook.gameObject.GetComponent<BobberManager>();
         debug.AddToAll(5);
     }
     private void OnEnable()
@@ -45,6 +50,8 @@ public class Fish : MonoBehaviour
 
     void Update()
     {
+        float distance = Vector3.Distance(transform.position, hook.position);
+        Debug.Log(distance.ToString() + " distance and attractdistance " + attractRange.ToString());
         lerpScript.UpdateRotationZ();
         if (debug.bools[0])
         {
@@ -59,22 +66,60 @@ public class Fish : MonoBehaviour
             Debug.DrawLine(transform.position, debug.vector3s[0], Color.blue);
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 5), Color.red);
         }
-        else if (attract)
+        else if (debug.bools[1]) // head empty, no brain
+        {
+
+        }
+        else if (runAway)
+        {
+            RotateTowardsObject(hook, fugoidTimer, 3, true);
+            Movement(30);
+        }
+
+
+
+        else if (attract) // move towards hook
         {
             Debug.DrawRay(transform.position, hook.position - transform.position, Color.magenta); //it works
             //RotationTimer();
             RotateTowardsObject(hook,fugoidTimer, 3);
             Movement();
+            if (distance < 1f)
+            {
+                caught = true;
+                attract = false;
+                hookScript.CatchFish();
+            }
         }
+
+
+
         else if (!caught)
         {
-            Fugoid(fishinfo.phugoidRange, startrotation, fugoidTimer, 5);
+            
+            Fugoid(fishinfo.phugoidRange, startrotation, fugoidTimer, 2);
             Movement();
+            
+            if ( distance < attractRange * 2 && hookScript.caughtFish)
+            {
+                runAway = true;
+                fugoidTimer.Start(4);
+            }
+            else if (Vector3.Distance(transform.position, hook.position) < attractRange)
+            {
+                attract = true;
+            }
+            else
+            {
+                attract = false;
+                runAway = false;
+            }
         }
-        else
+
+        else //caught
         {
             //RotationTimer();
-            transform.position = Vector3.Lerp(transform.position, new Vector3(hook.position.x,hook.position.y - 1.7f, hook.position.z), 0.5f);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(hook.position.x,hook.position.y - 2.3f, hook.position.z), 0.5f);
             Fugoid(10,lerpScript.GetDirectionToObject(hook), fugoidTimer, 0.5f, 10f);
         }
         
@@ -215,13 +260,13 @@ public class Fish : MonoBehaviour
 
         */
     }
-    private void RotateTowardsObject(Transform objectToGo, TimerTest timer, float duration)
+    private void RotateTowardsObject(Transform objectToGo, TimerTest timer, float duration, bool reverse = false)
     {
         timer.Update();
         if (timer.Check())
         {
             timer.Start(duration);
-            lerpScript.RotateZ(objectToGo);
+            lerpScript.RotateZ(objectToGo, 1f, reverse);
         }
     }
 
@@ -252,11 +297,14 @@ public class Fish : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, newgameobject.transform.position, 0.3f * Time.deltaTime);
         }
-        else
+    }
+    public void Movement(float speed = 10)
+    {
+        newgameobject.transform.localPosition = new Vector3(speed, 0, 0);
+        if (!caught)
         {
-            
+            transform.position = Vector3.Lerp(transform.position, newgameobject.transform.position, 0.3f * Time.deltaTime);
         }
-        
     }
     //have to add that bullshitusaoihfiho
 
