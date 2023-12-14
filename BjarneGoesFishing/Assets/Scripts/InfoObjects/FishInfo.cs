@@ -14,6 +14,7 @@ public class FishInfo : Info
     public int tier;
     public int minDepth; 
     public int maxDepth;
+
     public float phugoidRange; // how much fish go up down up down when swim
     public float baitRange;
     public float speed;

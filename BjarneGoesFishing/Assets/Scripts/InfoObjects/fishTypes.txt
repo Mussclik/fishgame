@@ -1,4 +1,4 @@
-ign, Fish [f, name, description (new line "¤"), (int)points, (int)tier, (int)minDepth, (int)maxDepth]
+ign, Fish [f, name, description, (int)points, (int)tier, (int)minDepth, (int)maxDepth, (float)phugoidRange, (float)baitRange, (float)speed]
 ign, FishingRod [rod, name, description, (int)tier, (int)price, (float)maxRange, (float)maxDepth]
 
 
@@ -9,8 +9,8 @@ ign, in descriptions you can add a "¤" to create a new line
 ign, f = fish, rod = fishing rod, item = item(duh), 
 
 ign, fishes
-f, koifish, koishi koishi, 5, 999, 25, 50
-f, missfish, its seems to have failed rendering properly, 0, 0, 0, 0
+f, koifish, koishi koishi, 5, 1, 25, 50, 15, 10, 15
+f, koifish, uh oh Something is broken, 300, 1, 0, 0, 0, 10, 10
 
 
 ign, fishing rods
