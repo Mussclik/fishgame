@@ -10,12 +10,13 @@ public class CameraFollowScript : MonoBehaviour
     [SerializeField][Range(0, 10)] public float followSpeed;
     internal Vector3 followingDirection;
     [SerializeField] bool lockXAxis, lockYAxis, lockZAxis;
+    Collider2D collider2d;
 
     // Start is called before the first frame update
     void Start()
     {
         //playerTransform = GameVariables.playerTransform;
-
+        collider2d = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -48,6 +49,13 @@ public class CameraFollowScript : MonoBehaviour
         if (lockZAxis) 
         { 
             transform.position = new Vector3(transform.position.x, transform.position.y, axislock.z); 
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(!collision.gameObject.CompareTag("Wall")) 
+        {
+            Physics2D.IgnoreCollision(this.collider2d, collision.collider);
         }
     }
 }

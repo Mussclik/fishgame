@@ -7,6 +7,8 @@ TagManager:
   - Manager
   - Fish
   - hook
+  - Wall
+  - RemoveZone
   layers:
   - Default
   - TransparentFX
