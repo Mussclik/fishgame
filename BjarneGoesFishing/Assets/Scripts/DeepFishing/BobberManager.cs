@@ -82,7 +82,11 @@ public class BobberManager : MonoBehaviour
     public void ReelingFish()
     {
         moveToHook.position += (Vector3.MoveTowards(transform.position, returnPoint.position, 2) - moveToHook.position);
-        lerpTimer.Start(1);
+        if (lerpTimer.elapsedTime >= lerpTimer.Duration)
+        {
+            lerpTimer.Start(2);
+        }
+        
     }
     public void FishEscape()
     {
