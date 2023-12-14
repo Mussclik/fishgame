@@ -8,40 +8,37 @@ using UnityEngine.XR;
 public class Fish : MonoBehaviour
 {
     public int id;
-    [SerializeField] private DebugVars debug = new DebugVars();
-    [SerializeField] private bool Increasing;
-    [SerializeField] private bool setValue;
+    [SerializeField] private bool increasing;
     [SerializeField] public bool attract;
-    [SerializeField] public float attractRange;
     [SerializeField] bool runAway;
 
                      public SpriteRenderer spriteRenderer;
     [SerializeField] internal bool caught = false;
     [SerializeField] public FishInfo fishinfo;
     [SerializeField] public Transform hook;
-    [SerializeField] private Transform mouth;
     [SerializeField] private LerpScript lerpScript;
 
 
 
 
     #region FugoidMethodVars
-    [SerializeField] private GameObject newgameobject;
+    [SerializeField] private GameObject movementObject;
     [SerializeField, Range(0, 360)] private float startrotation;
-    [SerializeField] private TimerTest caughtRotationTimer;
     [SerializeField] private TimerTest fugoidTimer;
     BobberManager hookScript;
     #endregion
 
     private void Start()
     {
-        caughtRotationTimer = new TimerTest(2);
         fugoidTimer = new TimerTest(2);
+        
+        fishinfo = GeneralManager.readfish.fishList[id];
+        spriteRenderer.sprite = GeneralManager.readfish.fishSprites[id];
+
         startrotation = transform.rotation.eulerAngles.z;
         lerpScript = new LerpScript(transform);
         hook = GameObject.FindWithTag("hook").transform;
         hookScript = hook.gameObject.GetComponent<BobberManager>();
-        debug.AddToAll(5);
     }
     private void OnEnable()
     {
@@ -51,26 +48,9 @@ public class Fish : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(transform.position, hook.position);
-        Debug.Log(distance.ToString() + " distance and attractdistance " + attractRange.ToString());
+        Debug.Log(distance.ToString() + " distance and attractdistance " + fishinfo.baitRange.ToString());
         lerpScript.UpdateRotationZ();
-        if (debug.bools[0])
-        {
-            Movement();
-            debug.timers[0].Update();
-            
-            if (debug.timers[0].Check())
-            {
-                debug.timers[0].Start(debug.ints[0]);
-                lerpScript.RotateZ(debug.vector3s[0].z);
-            }
-            Debug.DrawLine(transform.position, debug.vector3s[0], Color.blue);
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 5), Color.red);
-        }
-        else if (debug.bools[1]) // head empty, no brain
-        {
-
-        }
-        else if (runAway)
+        if (runAway)
         {
             RotateTowardsObject(hook, fugoidTimer, 3, true);
             Movement(30);
@@ -100,12 +80,12 @@ public class Fish : MonoBehaviour
             Fugoid(fishinfo.phugoidRange, startrotation, fugoidTimer, 2);
             Movement();
             
-            if ( distance < attractRange * 2 && hookScript.caughtFish)
+            if ( distance < fishinfo.baitRange * 2 && hookScript.caughtFish)
             {
                 runAway = true;
                 fugoidTimer.Start(4);
             }
-            else if (Vector3.Distance(transform.position, hook.position) < attractRange)
+            else if (Vector3.Distance(transform.position, hook.position) < fishinfo.baitRange)
             {
                 attract = true;
             }
@@ -149,17 +129,26 @@ public class Fish : MonoBehaviour
         {
             timer.Start(duration);
             float newDirection;
-            if (Increasing)
+            if (increasing)
             {
-                Increasing = false;
+                increasing = false;
                 newDirection = baserotation + range + 1f;
                 lerpScript.RotateZ(newDirection, speed);
             }
             else
             {
-                Increasing = true;
+                increasing = true;
                 newDirection = baserotation - range - 1f;
                 lerpScript.RotateZ(newDirection, speed);
+            }
+            float depth = Vector3.Distance(transform.position, new Vector3(transform.position.x, 0, transform.position.z));
+            if (!caught && depth > fishinfo.maxDepth)
+            {
+                increasing = false;
+            }
+            else if (!caught && depth < fishinfo.minDepth)
+            {
+                increasing = true;
             }
 
 
@@ -284,7 +273,7 @@ public class Fish : MonoBehaviour
     {
         fishinfo = GeneralManager.readfish.fishList[id];
         spriteRenderer.sprite = GeneralManager.readfish.fishSprites[id];
-        newgameobject.transform.localPosition = new Vector3(fishinfo.speed, fishinfo.speed, 0);
+        movementObject.transform.localPosition = new Vector3(fishinfo.speed, fishinfo.speed, 0);
     }
     public FishInfo RetrieveInfo()
     {
@@ -295,15 +284,15 @@ public class Fish : MonoBehaviour
     {
         if (!caught)
         {
-            transform.position = Vector3.Lerp(transform.position, newgameobject.transform.position, 0.3f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, movementObject.transform.position, 0.3f * Time.deltaTime);
         }
     }
     public void Movement(float speed = 10)
     {
-        newgameobject.transform.localPosition = new Vector3(speed, 0, 0);
+        movementObject.transform.localPosition = new Vector3(speed, 0, 0);
         if (!caught)
         {
-            transform.position = Vector3.Lerp(transform.position, newgameobject.transform.position, 0.3f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, movementObject.transform.position, 0.3f * Time.deltaTime);
         }
     }
     //have to add that bullshitusaoihfiho

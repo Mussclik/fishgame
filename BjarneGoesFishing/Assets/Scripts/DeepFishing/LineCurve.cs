@@ -7,7 +7,8 @@ public class LineCurve : MonoBehaviour
 {
     [SerializeField] Transform point1, point2, point3;
     [SerializeField] LineRenderer linerenderer;
-    [SerializeField, Range(3,50)] float vertexCount = 12;
+    [SerializeField, Range(3,50)] float vertexCount;
+
 
     private void Start()
     {
@@ -15,13 +16,14 @@ public class LineCurve : MonoBehaviour
     }
     private void Update()
     {
+
         List<Vector3> pointlist = new List<Vector3>();
 
-        for (float raiton = 0; raiton <= 1; raiton += 1 / vertexCount)
+        for (float ratio = 0; ratio <= 1; ratio += 1 / vertexCount)
         {
-            Vector3 tangent1 = Vector3.Lerp(point1.position, point2.position, raiton);
-            Vector3 tangent2 = Vector3.Lerp(point2.position, point3.position, raiton);
-            Vector3 curve = Vector3.Lerp(tangent1, tangent2, raiton);
+            Vector3 tangent1 = Vector3.Lerp(point1.position, point2.position, ratio);
+            Vector3 tangent2 = Vector3.Lerp(point2.position, point3.position, ratio);
+            Vector3 curve = Vector3.Lerp(tangent1, tangent2, ratio);
             pointlist.Add(curve);
         }
         linerenderer.positionCount = pointlist.Count;

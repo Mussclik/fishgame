@@ -1,26 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class BobberManager : MonoBehaviour
 {
     [SerializeField] internal int currentTier;
-    [SerializeField] Transform lineOffset;
-    [SerializeField] Transform returnPoint;
+    [SerializeField] UnityEngine.Transform lineOffset;
+    [SerializeField] UnityEngine.Transform returnPoint;
     [SerializeField] public bool caughtFish;
     [SerializeField] bool recentFailedCatch;
     [SerializeField] bool movement;
     TimerTest timer = new TimerTest(3);
+    [SerializeField] float currentDepth;
+    [SerializeField] TextMeshProUGUI depthMeter;
+
     void Start()
     {
-        
     }
 
     void Update()
     {
-
+        currentDepth = Vector3.Distance(transform.position, new Vector3(transform.position.x, 0, transform.position.z)) * 0.5f;
+        depthMeter.text = "Current Depth: " + currentDepth.ToString("0.0") + "m";
         if (movement)
         {
             Vector3 newMovement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));

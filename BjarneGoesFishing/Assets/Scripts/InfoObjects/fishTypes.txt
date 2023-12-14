@@ -1,16 +1,22 @@
 ign, Fish [f, name, description, (int)points, (int)tier, (int)minDepth, (int)maxDepth, (float)phugoidRange, (float)baitRange, (float)speed]
+
 ign, FishingRod [rod, name, description, (int)tier, (int)price, (float)maxRange, (float)maxDepth]
 
-
 ign, in descriptions you can add a "¤" to create a new line
-
-
-
 ign, f = fish, rod = fishing rod, item = item(duh), 
 
 ign, fishes
-f, koifish, koishi koishi, 5, 1, 25, 50, 15, 10, 15
-f, koifish, uh oh Something is broken, 300, 1, 0, 0, 0, 10, 10
+f, MissrenderFish, uh oh Something is broken, 300, 1, 0, 0, 0, 10, 10
+f, koifish, Quite the silly koishi Fish, 5, 1, 25, 50, 15, 10, 15
+f, bass, A bass with a penchant for playing air guitar ¤ It's the rockstar of the underwater world, 5, 1, 25, 50, 15, 10, 15
+f, ClownyBoi, A fish with a clown nose and a talent for juggling ¤ Watch out for its aquatic circus tricks, 5, 1, 25, 50, 15, 10, 15
+f, Cod, A fish that moonlights as a stand-up comedian ¤ Prepare for some fin-tastic jokes, 5, 1, 25, 50, 15, 10, 15
+f, Mackerel, A mackerel that's secretly a spy for the underwater espionage agency ¤ Its scales are its disguise, 5, 1, 25, 50, 15, 10, 15
+f, Pike, A pike that believes it's a submarine ¤ It even makes sonar noises while swimming, 5, 1, 25, 50, 15, 10, 15
+f, RoachFish, The Dapper RoachFish ¤ always swimming in style with its fashionable fins, 5, 1, 25, 50, 15, 10, 15
+f, Salmon, A salmon that dreams of swimming upstream in a fish ladder made of rainbows ¤ Quite the optimistic fish, 5, 1, 25, 50, 15, 10, 15
+
+
 
 
 ign, fishing rods
