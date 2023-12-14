@@ -1550,7 +1550,7 @@ MonoBehaviour:
   m_text: 'Press "E" To Go Back To The House
 
 
-    Press "Space" To Fish
+    Press "W" To Fish
 
 '
   m_isRightToLeft: 0
@@ -2425,8 +2425,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 071ad4ae02d1e674d830ba24d2ba2a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 32
+  key: 119
   disableButtons: 0
+  disableButtonsdelay: 0
   spriteRenderer: {fileID: 0}
   sprite: {fileID: -48047856, guid: b2352a7ffab400646b6ba8153519ca82, type: 3}
   currentFrameid: -1
@@ -2439,7 +2440,6 @@ MonoBehaviour:
   - {fileID: -1130614675, guid: b2352a7ffab400646b6ba8153519ca82, type: 3}
   card: {fileID: 1924180278}
   canvas: {fileID: 624645651}
-  debug: 1
 --- !u!1 &2052172425
 GameObject:
   m_ObjectHideFlags: 0

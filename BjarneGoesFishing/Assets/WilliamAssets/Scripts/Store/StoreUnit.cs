@@ -10,6 +10,8 @@ public class StoreUnit : MonoBehaviour
     [SerializeField] public UnityEngine.UI.Image spriterenderer;
     [SerializeField] public Sprite sprite;
     [SerializeField] public ItemInfo item;
+    [SerializeField] public bool isPurchased = false;
+
 
     public void UpdateInfo()
     {

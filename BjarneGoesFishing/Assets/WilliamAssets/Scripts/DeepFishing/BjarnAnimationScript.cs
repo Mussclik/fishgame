@@ -9,6 +9,7 @@ public class BjarnAnimationScript : MonoBehaviour
 {
     [SerializeField] KeyCode key;
     public bool disableButtons = false;
+    public bool disableButtonsdelay = false;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Sprite sprite;
     [SerializeField] int currentFrameid = -1;
@@ -17,9 +18,8 @@ public class BjarnAnimationScript : MonoBehaviour
     [SerializeField] Card card;
     [SerializeField] GameObject canvas;
     static bool caughtfish = false;
-    [SerializeField] bool debug;
 
-    static FishInfo fishinfo;
+    static FishInfo fishinfo = new FishInfo();
 
     private void Start()
     {
@@ -31,13 +31,6 @@ public class BjarnAnimationScript : MonoBehaviour
 
     private void Update()
     {
-        if (debug)
-        {
-            debug = false;
-            caughtfish = true;
-            fishinfo = ReadInfo.fishList2[3];
-        }
-
         if (caughtfish)
         {
             canvas.SetActive(true);
@@ -49,7 +42,7 @@ public class BjarnAnimationScript : MonoBehaviour
         timer.Update();
         spriteRenderer.sprite = sprite;
 
-        if (Input.GetKeyUp(key) && !disableButtons)
+        if (Input.GetKeyDown(key) && !disableButtons)
         {
             disableButtons = true;
             timer.enabled = true;
@@ -75,6 +68,11 @@ public class BjarnAnimationScript : MonoBehaviour
             Debug.Log("ChangedScnee");
         }
 
+        if (disableButtonsdelay)
+        {
+            disableButtonsdelay = false;
+            disableButtons = false;
+        }
     }
 
     public static void GiveInformation(FishInfo fish)

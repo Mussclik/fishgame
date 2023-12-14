@@ -9,7 +9,6 @@ public class FishRodInfo : ItemInfo
 {
     int tier;
     float maxDepth;
-    float maxRange;
     internal FishRodInfo()
     {
         consumable = false;
@@ -18,5 +17,12 @@ public class FishRodInfo : ItemInfo
     {
         
         base.GetidInfo(id);
+    }
+    public override void Buy()
+    {
+        PlayerInfo.maxDepth += (int)maxDepth;
+
+
+        base.Buy();
     }
 }

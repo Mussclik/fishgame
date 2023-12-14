@@ -11,12 +11,16 @@ public class Store : MonoBehaviour
     [SerializeField] GameObject shop;
     [SerializeField] List<GameObject> units;
     [SerializeField] List<ItemInfo> items;
+    [SerializeField] List<FishRodInfo> rods;
     [SerializeField] List<Sprite> sprites;
-    [SerializeField] List<Sprite> fishrodInfo;
 
 
     public void Start()
     {
+        foreach (FishRodInfo rod in rods)
+        {
+            items.Add(rod);
+        }
         int temp = 0;
         Debug.Log(items.Count);
         for (int i = 0; i < items.Count; i++)
@@ -63,11 +67,18 @@ public class Store : MonoBehaviour
     }
     public void Buy(StoreUnit storeunit, int currentplayermoney)
     {
-        if (currentplayermoney > storeunit.item.price)
+        if (!storeunit.isPurchased && currentplayermoney >= storeunit.item.price)
         {
+            storeunit.isPurchased = true;
             storeunit.bought.enabled = true;
+            storeunit.item.Buy();
+
+            // Additional code to handle the removal of the bought item from the list
+            units.Remove(storeunit.gameObject);
+            Destroy(storeunit.gameObject);
         }
     }
+
 
     public void ButtonBuy(int button)
     {
@@ -100,10 +111,11 @@ public class Store : MonoBehaviour
         }
         for (int i = 0; i < 4; i++)
         {
-            if (units[listOffset + i] != null)
+            int index = listOffset + i;
+            if (index < units.Count && !units[index].GetComponent<StoreUnit>().isPurchased)
             {
-                units[listOffset + i].SetActive(true);
-                newlist.Add(units[listOffset + 0]);
+                units[index].SetActive(true);
+                newlist.Add(units[index]);
             }
         }
         return newlist;

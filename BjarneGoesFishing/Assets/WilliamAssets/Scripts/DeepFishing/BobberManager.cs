@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -18,6 +19,7 @@ public class BobberManager : MonoBehaviour
     TimerTest lerpTimer = new TimerTest(0);
     [SerializeField] float currentDepth;
     [SerializeField] TextMeshProUGUI depthMeter;
+    [SerializeField] TextMeshProUGUI maxDepthMeter;
 
     [SerializeField] Vector3 minClamp;
     [SerializeField] Vector3 maxClamp;
@@ -64,10 +66,13 @@ public class BobberManager : MonoBehaviour
 
         currentDepth = Vector3.Distance(transform.position, new Vector3(transform.position.x, 0, transform.position.z)) * 0.5f;
         depthMeter.text = "Current Depth: " + currentDepth.ToString("0.0") + "m";
+        maxDepthMeter.text = $"Maximum Depth:" + PlayerInfo.maxDepth.ToString("0.0") + "m";
+        
 
         if (caughtFish && currentDepth <= 1f)
         {
-
+            BjarnAnimationScript.GiveInformation(caughtfishinfo);
+            SceneManager.LoadScene(4);
         }
 
 

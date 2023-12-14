@@ -17,4 +17,8 @@ public class ItemInfo : Info
     {
 
     }
+    public virtual void Buy()
+    {
+        PlayerInfo.money -= price;
+    }
 }

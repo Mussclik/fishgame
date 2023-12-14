@@ -6,5 +6,5 @@ using UnityEngine;
 public class PlayerInfo
 {
     public static int money;
-    public static int rodID;
+    public static int maxDepth;
 }
