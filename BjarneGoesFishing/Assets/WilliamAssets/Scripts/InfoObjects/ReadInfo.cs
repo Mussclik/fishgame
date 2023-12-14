@@ -29,6 +29,9 @@ public class ReadInfo : MonoBehaviour
     [SerializeField]
     public List<Sprite> fishSprites;
 
+    public static List<Sprite> fishSprites2;
+    public static List<FishInfo> fishList2;
+
 
     private void OnValidate() //this be stoled
     {
@@ -77,6 +80,9 @@ public class ReadInfo : MonoBehaviour
             }
             */
         }
+
+        fishList2 = fishList;
+        fishSprites2 = fishSprites;
 
     }
 

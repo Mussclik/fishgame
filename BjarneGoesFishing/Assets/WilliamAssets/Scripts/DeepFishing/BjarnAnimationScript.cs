@@ -17,6 +17,7 @@ public class BjarnAnimationScript : MonoBehaviour
     [SerializeField] Card card;
     [SerializeField] GameObject canvas;
     static bool caughtfish = false;
+    [SerializeField] bool debug;
 
     static FishInfo fishinfo;
 
@@ -25,16 +26,26 @@ public class BjarnAnimationScript : MonoBehaviour
         timer.enabled = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if (caughtfish)
-        {
-            card.gameObject.SetActive(true);
-            card.fishinfo = fishinfo;
-            disableButtons = true;
-        }
+
     }
 
     private void Update()
     {
+        if (debug)
+        {
+            debug = false;
+            caughtfish = true;
+            fishinfo = ReadInfo.fishList2[3];
+        }
+
+        if (caughtfish)
+        {
+            canvas.SetActive(true);
+            card.fishinfo = fishinfo;
+            disableButtons = true;
+            card.UpdateInfo();
+        }
+
         timer.Update();
         spriteRenderer.sprite = sprite;
 
@@ -55,13 +66,12 @@ public class BjarnAnimationScript : MonoBehaviour
         if (currentFrameid >= 0 && currentFrameid <= animation.Count - 1)
         {
             Debug.Log("animatign");
-            spriteRenderer.sprite = animation[currentFrameid];
+            spriteRenderer.sprite = animation[animation.Count - 1 - currentFrameid];
         }
 
         if (currentFrameid == animation.Count) 
         {
-            //SceneManager.LoadScene(1);
-            //
+            SceneManager.LoadScene(1);
             Debug.Log("ChangedScnee");
         }
 
@@ -71,5 +81,10 @@ public class BjarnAnimationScript : MonoBehaviour
     {
         fishinfo = fish;
         caughtfish = true;
+    }
+    public void StopCanvas()
+    {
+        caughtfish = false;
+        PlayerInfo.money += fishinfo.value;
     }
 }

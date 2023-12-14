@@ -28,13 +28,21 @@ public class Card : MonoBehaviour
         }
     }
 
-    void UpdateInfo(int id)
+    public void UpdateInfo()
     {
         id = fishinfo.id;
         value.text = fishinfo.value.ToString();
-        fishinfo = GeneralManager.readfish.fishList[id];
+        fishinfo = ReadInfo.fishList2[id];
         namerenderer.text = fishinfo.name;
         descriptionRenderer.text = fishinfo.description;
-        spriteRenderer.sprite = GeneralManager.readfish.fishSprites[id];
+        spriteRenderer.sprite = ReadInfo.fishSprites2[id];
+    }
+    public void UpdateInfo(int id)
+    {
+        value.text = fishinfo.value.ToString();
+        fishinfo = ReadInfo.fishList2[id];
+        namerenderer.text = fishinfo.name;
+        descriptionRenderer.text = fishinfo.description;
+        spriteRenderer.sprite = ReadInfo.fishSprites2[id];
     }
 }
