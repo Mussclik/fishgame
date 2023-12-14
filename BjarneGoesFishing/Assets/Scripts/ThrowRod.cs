@@ -7,6 +7,9 @@ public class ThrowRod : MonoBehaviour
     public float minTime = 0f;
     public float maxTime = 10f;
     public float timer;
+    ChanceOfFish fishming = new ChanceOfFish();
+    public Animation fishRodThrow = null;
+    // Start is called before the first frame update
     void Start()
     {
         GetComponent<Sprite>();
@@ -15,24 +18,27 @@ public class ThrowRod : MonoBehaviour
     public void FishingTimer()
     {
         timer -= Time.deltaTime;
-        Debug.Log(timer.ToString("0.00"));
         if (timer <= minTime)
         {
             timer = Random.Range(minTime, maxTime);
-
-            Debug.Log("Event");
+            fishming.GenerateFish();
         }
+
+
     }
+
+
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.E))
         {
-
+            
             FishingTimer();
-
+            fishRodThrow.Play();
         }
 
-
+        
     }
 }
