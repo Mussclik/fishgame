@@ -1934,7 +1934,17 @@ MonoBehaviour:
   shop: {fileID: 543835697}
   units: []
   items: []
-  rods: []
+  rods:
+  - name: 
+    description: 
+    id: 0
+    consumable: 0
+    price: 0
+  - name: 
+    description: 
+    id: 0
+    consumable: 0
+    price: 0
   sprites: []
 --- !u!1 &1822235233
 GameObject:
