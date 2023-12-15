@@ -33,14 +33,16 @@ public class ReadInfo : MonoBehaviour
     public static List<FishInfo> fishList2;
 
 
-    private void OnValidate() //this be stoled
+    private void Awake() //this be stoled
     {
-
+        PlayerInfo.money = 0;
+        PlayerInfo.maxDepth = 49;
         // the ? is a short way of asking if it does not equal null then continue, if it does equal null then return lines = nulll
         lines = List ? List.text.Split(new[]
         {
                 Environment.NewLine
-            }, StringSplitOptions.RemoveEmptyEntries) : null; // if creaturecardlist equals true then it makes a new split every new line, also remove empty lines as an addon(?) and if it equals false return null
+        }
+        , StringSplitOptions.RemoveEmptyEntries) : null; // if creaturecardlist equals true then it makes a new split every new line, also remove empty lines as an addon(?) and if it equals false return null
 
         fishList.Clear();
 
