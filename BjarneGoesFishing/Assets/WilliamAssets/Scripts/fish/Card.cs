@@ -45,4 +45,11 @@ public class Card : MonoBehaviour
         descriptionRenderer.text = fishinfo.description;
         spriteRenderer.sprite = ReadInfo.fishSprites2[id];
     }
+    public void UpdateInfo(FishInfo fishinfo, Sprite sprite)
+    {
+        value.text = fishinfo.value.ToString();
+        namerenderer.text = fishinfo.name;
+        descriptionRenderer.text = fishinfo.description;
+        spriteRenderer.sprite = sprite;
+    }
 }

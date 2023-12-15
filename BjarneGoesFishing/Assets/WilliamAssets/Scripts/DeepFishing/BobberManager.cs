@@ -115,7 +115,7 @@ public class BobberManager : MonoBehaviour
             Debug.Log("turning of wormscript object");
             wormscript.gameObject.SetActive(false);
             lerpTimer.Start(0.5f);
-            moveToHook.position += (Vector3.MoveTowards(transform.position, returnPoint.position, 10) - moveToHook.position);
+            moveToHook.position += (Vector3.MoveTowards(transform.position, returnPoint.position, 10 * PlayerInfo.reelSpeedMultiplier) - moveToHook.position);
         }
     }
     public void FishEscape()

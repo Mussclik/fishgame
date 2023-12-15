@@ -9,6 +9,7 @@ public class FishRodInfo : ItemInfo
 {
     int tier;
     [SerializeField] float maxDepth;
+    [SerializeField] float reelSpeed;
     internal FishRodInfo()
     {
         consumable = false;
@@ -21,8 +22,7 @@ public class FishRodInfo : ItemInfo
     public override void Buy()
     {
         PlayerInfo.maxDepth += (int)maxDepth;
-
-
+        PlayerInfo.reelSpeedMultiplier += reelSpeed;
         base.Buy();
     }
 }

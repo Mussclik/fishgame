@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea86e7c3504b2024991162674f1d841d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1
   increasing: 0
   attract: 0
   runAway: 0
@@ -143,6 +143,9 @@ MonoBehaviour:
     getGlobal: 1
     targetZ: 0
     targetRotation: {x: 0, y: 0, z: 0}
+    transform: {fileID: 0}
+    gameobject: {fileID: 0}
+  wallDistance: 0
   movementObject: {fileID: 7241509855782946583}
   startrotation: 0
   fugoidTimer:
