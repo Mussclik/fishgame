@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,6 +43,13 @@ public class MainMenu : MonoBehaviour
 
         // Change the current button index while skipping over disabled buttons
         // do-while. do is run once without conditions, and after is run every while where the while condition is met
+        // Check if there are any active buttons
+        if (buttons.All(button => !button.gameObject.activeInHierarchy))
+        {
+            // No active buttons, exit the method
+            return;
+        }
+
         do
         {
             currentButtonIndex += direction;
