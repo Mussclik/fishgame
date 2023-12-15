@@ -8,7 +8,7 @@ using UnityEngine;
 public class FishRodInfo : ItemInfo
 {
     int tier;
-    float maxDepth;
+    [SerializeField] float maxDepth;
     internal FishRodInfo()
     {
         consumable = false;

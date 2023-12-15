@@ -5,16 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class DoorToShop : MonoBehaviour
 {
-    public int sceneToLoad;
+    [SerializeField] bool LoadScene;
+    [SerializeField] int scene;
+    [SerializeField] Store store;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the collider belongs to the player (you can customize this check as needed)
-        if (other.CompareTag("Player"))
+        if (LoadScene)
         {
-            // Load the specified scene
-            SceneManager.LoadScene(sceneToLoad);
+            SceneManager.LoadScene(scene);
         }
+        else if (Input.GetKeyDown(KeyCode.E) && !LoadScene)
+        {
+            store.Open();
+        }
+        // Check if the collider belongs to the player (you can customize this check as needed)
+
 
     }
 }

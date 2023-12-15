@@ -13,6 +13,7 @@ public class Store : MonoBehaviour
     [SerializeField] List<ItemInfo> items;
     [SerializeField] List<FishRodInfo> rods;
     [SerializeField] List<Sprite> sprites;
+    [SerializeField] MovementScript script;
 
 
     public void Start()
@@ -21,16 +22,17 @@ public class Store : MonoBehaviour
         {
             items.Add(rod);
         }
+
         int temp = 0;
         Debug.Log(items.Count);
+
         for (int i = 0; i < items.Count; i++)
         {
-            
+            Debug.Log(i.ToString() + " " + items.Count.ToString());
             if (temp > 3)
             {
                 temp = 0;
             }
-            
 
             GameObject newUnit = Instantiate(unitPrefab, unitPositions[temp].position, Quaternion.identity, shop.transform);
             StoreUnit unitIteminfo = newUnit.GetComponent<StoreUnit>();
@@ -48,11 +50,12 @@ public class Store : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.O))
         {
-            Info.playermoney += 500;
+            PlayerInfo.money += 500;
         }
     }
     public void Open()
     {
+        script.stopped = true;
         open = true;
         listOffset = 0;
         Time.timeScale = 0;
@@ -60,6 +63,7 @@ public class Store : MonoBehaviour
     }
     public void Close()
     {
+        script.stopped = false;
         open = false;
         Time.timeScale = 1;
         shop.SetActive(false);
@@ -83,7 +87,11 @@ public class Store : MonoBehaviour
     public void ButtonBuy(int button)
     {
         List<GameObject> unitlist = UpdateSelection();
-        Buy(unitlist[button].GetComponent<StoreUnit>(), Info.playermoney);
+        if ((unitlist.Count - 1) >= button)
+        {
+            Buy(unitlist[button].GetComponent<StoreUnit>(), PlayerInfo.money);
+        }
+        
     }
     public void Next()
     {

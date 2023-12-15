@@ -13,7 +13,9 @@ public class mainmenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync(1); 
+        PlayerInfo.maxDepth = 49;
+        SceneManager.LoadSceneAsync(3); 
+        
     }
     public void QuitGame()
     {
