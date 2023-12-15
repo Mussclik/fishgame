@@ -92,9 +92,9 @@ public class BobberManager : MonoBehaviour
                 caughtFish = false;
             }
         }
-
+        maxClamp.y = -PlayerInfo.maxDepth * 2;
         transform.position = CameraFollowScript.ClampVector3(transform.position ,minClamp, maxClamp);
-
+        //transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, PlayerInfo.maxDepth, 0), transform.position.z);
 
     }
         

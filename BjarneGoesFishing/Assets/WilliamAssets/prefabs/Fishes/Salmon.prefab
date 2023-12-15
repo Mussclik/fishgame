@@ -174,11 +174,12 @@ MonoBehaviour:
     getGlobal: 1
     targetZ: 0
     targetRotation: {x: 0, y: 0, z: 0}
-  movementObject: {fileID: 0}
+  movementObject: {fileID: 6714423382783342156}
   startrotation: 0
   fugoidTimer:
     timer: 0
     duration: 0
+    enabled: 0
 --- !u!58 &546736293174006682
 CircleCollider2D:
   m_ObjectHideFlags: 0

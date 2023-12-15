@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -16,14 +14,16 @@ public class LerpScript
     public float targetZ;
     public Vector3 targetRotation;
     //public Vector3 forward = new Vector3(5, 5, 0);
-    Transform transform;
+    [SerializeField] private Transform transform;
+    [SerializeField] private GameObject gameobject;
     
 
     #endregion
 
-    internal LerpScript(Transform transform)
+    internal LerpScript(Transform mewtransform)
     {
-        this.transform = transform;
+        transform = mewtransform;
+
     }
 
 
@@ -69,6 +69,15 @@ public class LerpScript
             rotationCurve = GeneralManager.curve;
             timerZ.Start(GeneralManager.curveDuration);
         }
+        if (timerZ == null)
+        {
+            timerZ = new TimerTest(3);
+        }
+        if (transform == null)
+        {
+            Debug.Log("im crying bro");
+        }
+
         if (!timerZ.Check())
         {
             timerZ.Update();

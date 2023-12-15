@@ -11,6 +11,9 @@ using UnityEngine.SceneManagement;
 
 public class mainmenu : MonoBehaviour
 {
+    public GameObject mainMenu;
+    public GameObject credits;
+
     public void PlayGame()
     {
         PlayerInfo.maxDepth = 49;
@@ -20,6 +23,17 @@ public class mainmenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenCredits()
+    {
+        mainMenu.SetActive(false);
+        credits.SetActive(true);
+    }
+    public void CloseCredits()
+    {
+        mainMenu.SetActive(true);
+        credits.SetActive(false);
     }
 
 

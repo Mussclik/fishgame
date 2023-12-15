@@ -116,16 +116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  debug:
-    ints: 
-    bools: 
-    strings: []
-    vector3s: []
-    timers: []
-  Increasing: 0
-  setValue: 0
+  increasing: 0
   attract: 0
-  attractRange: 0
   runAway: 0
   spriteRenderer: {fileID: 2566468881247011008}
   caught: 0
@@ -141,7 +133,6 @@ MonoBehaviour:
     baitRange: 0
     speed: 0
   hook: {fileID: 0}
-  mouth: {fileID: 0}
   lerpScript:
     rotationCurve:
       serializedVersion: 2
@@ -152,14 +143,12 @@ MonoBehaviour:
     getGlobal: 1
     targetZ: 0
     targetRotation: {x: 0, y: 0, z: 0}
-  newgameobject: {fileID: 7241509855782946583}
+  movementObject: {fileID: 7241509855782946583}
   startrotation: 0
-  caughtRotationTimer:
-    timer: 0
-    duration: 0
   fugoidTimer:
     timer: 0
     duration: 0
+    enabled: 0
 --- !u!58 &128726312195904524
 CircleCollider2D:
   m_ObjectHideFlags: 0

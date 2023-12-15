@@ -12,13 +12,16 @@ public class Fish : MonoBehaviour
     [SerializeField] public bool attract;
     [SerializeField] bool runAway;
 
-                     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
     [SerializeField] internal bool caught = false;
     [SerializeField] public FishInfo fishinfo;
     [SerializeField] public Transform hook;
     [SerializeField] private LerpScript lerpScript;
 
-
+    //i dont care anymore just lemme hardcode, its 03:29 and it has to be done today
+    Vector3 maxclamp = new Vector3(-67.8f, -0.8f, 0);
+    Vector3 minclamp = new Vector3(161.3f, -296.3f, 0);
+    [SerializeField] float wallDistance;
 
 
     #region FugoidMethodVars
@@ -30,13 +33,14 @@ public class Fish : MonoBehaviour
 
     private void Start()
     {
+        CameraFollowScript.SortVector3Size(minclamp, maxclamp);
         fugoidTimer = new TimerTest(2);
         
-        fishinfo = GeneralManager.readfish.fishList[id];
-        spriteRenderer.sprite = GeneralManager.readfish.fishSprites[id];
+        fishinfo = ReadInfo.fishList2[id];
+        spriteRenderer.sprite = ReadInfo.fishSprites2[id];
 
         startrotation = transform.rotation.eulerAngles.z;
-        lerpScript = new LerpScript(transform);
+        lerpScript = new LerpScript(this.transform);
         hook = GameObject.FindWithTag("hook").transform;
         hookScript = hook.gameObject.GetComponent<BobberManager>();
         movementObject = transform.GetChild(0).gameObject;
@@ -48,6 +52,20 @@ public class Fish : MonoBehaviour
 
     void Update()
     {
+        wallDistance = Vector3.Distance(transform.position, new Vector3(minclamp.x, transform.position.y, 0));
+        if (wallDistance < 5)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0,180,transform.rotation.z));
+        }
+
+        wallDistance = Vector3.Distance(transform.position, new Vector3(maxclamp.x, transform.position.y, 0));
+        if (wallDistance < 5)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, transform.rotation.z));
+        }
+
+
+
         float distance = Vector3.Distance(transform.position, hook.position);
         lerpScript.UpdateRotationZ();
 
@@ -108,6 +126,7 @@ public class Fish : MonoBehaviour
 
         else //caught
         {
+            transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
             if (hookScript.recentFailedCatch)
             {
                 caught = false;
@@ -118,6 +137,7 @@ public class Fish : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, new Vector3(hook.position.x,hook.position.y - 2.3f, hook.position.z), 0.5f);
             Fugoid(10,lerpScript.GetDirectionToObject(hook), fugoidTimer, 0.5f, 10f);
         }
+        transform.position = CameraFollowScript.ClampVector3(transform.position, minclamp, maxclamp);
         
     }
     public void Release()
@@ -284,8 +304,8 @@ public class Fish : MonoBehaviour
 
     public void UpdateInfo(int id)
     {
-        fishinfo = GeneralManager.readfish.fishList[id];
-        spriteRenderer.sprite = GeneralManager.readfish.fishSprites[id];
+        fishinfo = ReadInfo.fishList2[id];
+        spriteRenderer.sprite = ReadInfo.fishSprites2[id];
         movementObject.transform.localPosition = new Vector3(fishinfo.speed, fishinfo.speed, 0);
     }
     public FishInfo RetrieveInfo()

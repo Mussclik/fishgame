@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public Button[] buttons;
+    public List<Button> buttons;
     private int currentButtonIndex = 0;
 
     void Start()
@@ -17,13 +17,13 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         // Navigate up
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             ChangeSelectedButton(-1);
         }
 
         // Navigate down
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             ChangeSelectedButton(1);
         }
@@ -40,18 +40,22 @@ public class MainMenu : MonoBehaviour
         // Deselect the current button
         buttons[currentButtonIndex].image.color = Color.white;
 
-        // Change the current button index
-        currentButtonIndex += direction;
+        // Change the current button index while skipping over disabled buttons
+        // do-while. do is run once without conditions, and after is run every while where the while condition is met
+        do
+        {
+            currentButtonIndex += direction;
 
-        // Wrap around if reaching the end of the button list
-        if (currentButtonIndex < 0)
-        {
-            currentButtonIndex = buttons.Length - 1;
-        }
-        else if (currentButtonIndex >= buttons.Length)
-        {
-            currentButtonIndex = 0;
-        }
+            // Wrap around if reaching the end of the button list
+            if (currentButtonIndex < 0)
+            {
+                currentButtonIndex = buttons.Count - 1;
+            }
+            else if (currentButtonIndex >= buttons.Count)
+            {
+                currentButtonIndex = 0;
+            }
+        } while (!buttons[currentButtonIndex].gameObject.activeInHierarchy); // Skip disabled buttons
 
         // Select the new current button
         SelectButton(currentButtonIndex);
