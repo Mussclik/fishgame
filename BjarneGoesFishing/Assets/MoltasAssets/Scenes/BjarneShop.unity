@@ -2195,14 +2195,14 @@ MonoBehaviour:
     id: 0
     consumable: 0
     price: 100
-    maxDepth: 49
+    maxDepth: 0
     reelSpeed: 0.2
   - name: FastRod
     description: 20% faster Reeling
     id: 0
     consumable: 0
     price: 200
-    maxDepth: 49
+    maxDepth: 0
     reelSpeed: 0.2
   sprites:
   - {fileID: 21300000, guid: 2b861c6eaa7ceca4cab348694bdcbf6d, type: 3}

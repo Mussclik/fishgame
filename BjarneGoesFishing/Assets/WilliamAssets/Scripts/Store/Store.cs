@@ -6,7 +6,6 @@ public class Store : MonoBehaviour
 {
     private int listOffset = 0;
     public bool open;
-    static bool firstload = true;
     [SerializeField] GameObject unitPrefab;
     [SerializeField] Transform[] unitPositions = new Transform[4];
     [SerializeField] GameObject shop;
@@ -19,20 +18,17 @@ public class Store : MonoBehaviour
 
     public void Start()
     {
-        //if (firstload)
-        //{
-            foreach (FishRodInfo rod in rods) // this causes problems everytime the scene is loaded
-            {
-                items.Add(rod);
-            }
-        //    firstload = false;
-        //}
-
+        foreach (FishRodInfo rod in rods)
+        {
+            items.Add(rod);
+        }
 
         int temp = 0;
+        Debug.Log(items.Count);
 
         for (int i = 0; i < items.Count; i++)
         {
+            Debug.Log(i.ToString() + " " + items.Count.ToString());
             if (temp > 3)
             {
                 temp = 0;
@@ -54,7 +50,7 @@ public class Store : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.O))
         {
-            PlayerInfo.money += 500;
+            PersistentManager.money += 500;
         }
     }
     public void Open()
@@ -83,7 +79,6 @@ public class Store : MonoBehaviour
 
             // Additional code to handle the removal of the bought item from the list
             units.Remove(storeunit.gameObject);
-            Debug.Log("Deleting " + storeunit.gameObject.name);
             Destroy(storeunit.gameObject);
         }
     }
@@ -92,13 +87,11 @@ public class Store : MonoBehaviour
     public void ButtonBuy(int button)
     {
         List<GameObject> unitlist = UpdateSelection();
-
-        if (button < unitlist.Count)
+        if ((unitlist.Count - 1) >= button)
         {
-            Buy(unitlist[button].GetComponent<StoreUnit>(), PlayerInfo.money);
+            Buy(unitlist[button].GetComponent<StoreUnit>(), PersistentManager.money);
         }
-
-        UpdateSelection();
+        
     }
     public void Next()
     {
@@ -120,13 +113,10 @@ public class Store : MonoBehaviour
     public List<GameObject> UpdateSelection()
     {
         List<GameObject> newlist = new List<GameObject>();
-
         foreach (GameObject unit in units)
         {
-            unit.GetComponent<StoreUnit>().UpdateInfo();
             unit.SetActive(false);
         }
-
         for (int i = 0; i < 4; i++)
         {
             int index = listOffset + i;
@@ -136,7 +126,6 @@ public class Store : MonoBehaviour
                 newlist.Add(units[index]);
             }
         }
-
         return newlist;
     }
 

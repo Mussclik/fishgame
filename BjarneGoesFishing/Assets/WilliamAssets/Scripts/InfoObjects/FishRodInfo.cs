@@ -8,7 +8,7 @@ using UnityEngine;
 public class FishRodInfo : ItemInfo
 {
     int tier;
-    [SerializeField] float maxDepth;
+    [SerializeField] int maxDepth;
     [SerializeField] float reelSpeed;
     internal FishRodInfo()
     {
@@ -21,7 +21,9 @@ public class FishRodInfo : ItemInfo
     }
     public override void Buy()
     {
-        PlayerInfo.maxDepth += (int)maxDepth;
+        Debug.Log((int)maxDepth);
+        PlayerInfo.maxDepth += maxDepth;
+        PersistentManager.maxDepth += maxDepth;
         PlayerInfo.reelSpeedMultiplier += reelSpeed;
         base.Buy();
     }

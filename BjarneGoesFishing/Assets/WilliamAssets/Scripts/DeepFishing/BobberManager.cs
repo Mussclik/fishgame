@@ -65,7 +65,7 @@ public class BobberManager : MonoBehaviour
 
         currentDepth = Vector3.Distance(transform.position, new Vector3(transform.position.x, 0, transform.position.z)) * 0.5f;
         depthMeter.text = "Current Depth: " + currentDepth.ToString("0.0") + "m";
-        maxDepthMeter.text = $"Maximum Depth:" + PlayerInfo.maxDepth.ToString("0.0") + "m";
+        maxDepthMeter.text = $"Maximum Depth:" + PersistentManager.maxDepth.ToString("0.0") + "m";
         
 
         if (caughtFish && currentDepth <= 1f)
@@ -91,7 +91,9 @@ public class BobberManager : MonoBehaviour
                 caughtFish = false;
             }
         }
-        maxClamp.y = -PlayerInfo.maxDepth * 2;
+        maxClamp.y = (-PersistentManager.maxDepth * 2);
+        Debug.Log(-PersistentManager.maxDepth * 2);
+
         transform.position = CameraFollowScript.ClampVector3(transform.position ,minClamp, maxClamp);
         //transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, PlayerInfo.maxDepth, 0), transform.position.z);
 
