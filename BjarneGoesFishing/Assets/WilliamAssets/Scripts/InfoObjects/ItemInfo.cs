@@ -19,6 +19,6 @@ public class ItemInfo : Info
     }
     public virtual void Buy()
     {
-        PlayerInfo.money -= price;
+        PersistentManager.money -= price;
     }
 }

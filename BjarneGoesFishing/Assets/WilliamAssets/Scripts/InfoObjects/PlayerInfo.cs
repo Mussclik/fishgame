@@ -7,5 +7,6 @@ public class PlayerInfo
 {
     public static int money;
     public static int maxDepth = 49;
+    public static int maxDepth2;
     public static float reelSpeedMultiplier = 1;
 }

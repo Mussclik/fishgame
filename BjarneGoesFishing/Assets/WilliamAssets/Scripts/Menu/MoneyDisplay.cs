@@ -13,6 +13,6 @@ public class MoneyDisplay : MonoBehaviour
     }
     private void Update()
     {
-        textmeshpro.text = $"Money: {PlayerInfo.money}";
+        textmeshpro.text = $"Money: {PersistentManager.money}";
     }
 }

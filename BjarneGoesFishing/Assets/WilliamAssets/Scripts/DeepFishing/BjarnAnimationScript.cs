@@ -83,6 +83,6 @@ public class BjarnAnimationScript : MonoBehaviour
     public void StopCanvas()
     {
         caughtfish = false;
-        PlayerInfo.money += fishinfo.value;
+        PersistentManager.money += fishinfo.value;
     }
 }

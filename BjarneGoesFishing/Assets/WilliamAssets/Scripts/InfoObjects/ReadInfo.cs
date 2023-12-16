@@ -35,8 +35,6 @@ public class ReadInfo : MonoBehaviour
 
     private void Awake() //this be stoled
     {
-        PlayerInfo.money = 0;
-        PlayerInfo.maxDepth = 49;
         // the ? is a short way of asking if it does not equal null then continue, if it does equal null then return lines = nulll
         lines = List ? List.text.Split(new[]
         {
